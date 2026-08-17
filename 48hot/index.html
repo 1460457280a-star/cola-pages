@@ -832,36 +832,7 @@ function renderBriefNewspaper(el, b){
   bindJumps(el);
 }
 function renderBrief(){
-  const el = document.getElementById('brief');
-  const b = DATA.brief || {};
-  renderBriefNewspaper(el, b); return;
-  const latest = b.latest_news || [];
-  const lead = briefLead(latest);
-  const hotAnchor = t => (DATA.hot_topics || []).find(x => x.title === t.title)?.anchor_id || '';
-  const storyAnchor = e => (DATA.stories || []).find(x => x.title === e.event)?.anchor_id || '';
-  const jump = (label, section, anchor) => anchor
-    ? `<button class="jump-link" data-section="${section}" data-anchor="${esc(anchor)}">${esc(label)}</button>`
-    : esc(label);
-  let h = `<h2>今日简报</h2><p class="hint">${esc(b.honest_line || '')} · 当日速览，全量动态见「今日动态」。</p>`;
-  h += `<div class="brief-layout"><article class="brief-lead">`;
-  if(lead){
-    h += `<p class="module-kicker">当日首讯 · ${esc(lead.tag || lead.channel || '')} · ${esc((lead.published_at_tz || '').slice(11,16))}</p>`+
-      `<h3><a href="${esc(lead.url)}" target="_blank" rel="noopener">${esc(lead.title)}</a></h3>`+
-      `<p>${esc(lead.summary || lead.title)}</p><div class="meta">${esc(lead.source || '')} · <a href="${esc(lead.url)}" target="_blank" rel="noopener">原文 ↗</a></div>`;
-  }else h += `<div class="empty">暂无当日动态</div>`;
-  h += `</article><aside class="brief-aside"><p class="module-kicker">今日看点 · 点击跳转</p>`;
-  (b.hot_topics || []).slice(0,3).forEach(t=>{
-    h += `<div class="news"><span class="rank r${t.rank}">${t.rank}</span>`+
-      `<span class="ttl">${jump(t.title, 'hot', hotAnchor(t))}</span><div class="why">${esc(t.why_hot)}</div></div>`;
-  });
-  (b.event_updates || []).slice(0,3).forEach(e=>{
-    h += `<div class="news"><span class="tag act">进展</span>`+
-      `<span class="ttl">${jump(e.event, 'stories', storyAnchor(e))}</span><div class="why">${esc(e.latest)}</div></div>`;
-  });
-  h += `</aside></div>`;
-  h += `<div class="brief-cta"><button class="jump-link cta-btn" data-section="feed">查看全部动态（近 7 天）→</button><button class="jump-link cta-btn" data-section="hot">完整热点榜 →</button></div>`;
-  el.innerHTML = h;
-  bindJumps(el);
+  renderBriefNewspaper(document.getElementById('brief'), DATA.brief || {});
 }
 
 /* ---- 热点 ---- */
@@ -1103,7 +1074,7 @@ function renderMemberEvents(){
   const VOTE_KEY = '48hot-votes-v1';
   const LV = {1:'弱',2:'偏弱',3:'中规',4:'强',5:'顶尖'};
   const loadVotes = () => { try { return JSON.parse(localStorage.getItem(VOTE_KEY) || '{}'); } catch(e){ return {}; } };
-  const saveVotes = v => localStorage.setItem(VOTE_KEY, JSON.stringify(v));
+  const saveVotes = v => { try { localStorage.setItem(VOTE_KEY, JSON.stringify(v)); } catch(e){} };
   const voteCount = v => Object.keys(v).filter(n => v[n] && Object.keys(v[n]).length).length;
   const votePanel = m => {
     if(!m) return '';
@@ -1235,7 +1206,11 @@ function renderMemberEvents(){
       }
       const js = JSON.stringify({ schema_version:'1.0.0', source:'community-vote', votes:v }, null, 2);
       if(act === 'copy'){
-        navigator.clipboard.writeText(js).then(() => alert('已复制投票 JSON，粘贴给编辑即可合并。')).catch(() => prompt('复制失败，请手动复制：', js));
+        if(navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
+          navigator.clipboard.writeText(js).then(() => alert('已复制投票 JSON，粘贴给编辑即可合并。')).catch(() => prompt('复制失败，请手动复制：', js));
+        }else{
+          prompt('当前环境不支持剪贴板，请手动复制：', js);
+        }
       }else{
         const blob = new Blob([js], {type:'application/json'});
         const a = document.createElement('a');
