@@ -725,15 +725,18 @@ body.page-home .signal-hero{padding:52px 0 58px; min-height:clamp(520px,72vh,700
 body.page-home .signal-hero .signal-title{margin:22px 0 14px}
 body.page-home .signal-hero .signal-actions{margin-top:24px}
 body.page-home .signal-hero .signal-readout{margin-top:36px; gap:18px}
-/* 内页是 Read/Operate 模式：招牌压缩为一条标题带，把首屏让给页面真实内容 */
-body:not(.page-home) .signal-hero{padding:22px 0 20px; min-height:0; display:block}
-body:not(.page-home) .signal-kicker{font-size:11px}
-body:not(.page-home) .signal-title{margin:6px 0 8px; font-size:clamp(26px,3.2vw,40px); line-height:1.08}
-body:not(.page-home) .signal-deck{font-size:14px; line-height:1.7; max-width:640px}
-body:not(.page-home) .signal-actions{margin-top:14px}
-body:not(.page-home) .signal-cta{padding:9px 14px; font-size:13px}
+/* 内页是 Read/Operate 模式：hero 降级为一条「档案条」，只回答「这是哪一页」，把首屏交给正文。
+   三条硬规则：① 标题是页面名，不是主张句（避免与正文 H2 重复成同一句话）
+              ② 去掉巨型「48」水印  ③ 去掉通用三连 CTA（导航已由侧栏承担） */
+body:not(.page-home) .signal-hero{padding:14px 0 16px; min-height:0; display:block}
+body:not(.page-home) .signal-hero::after{display:none}
+body:not(.page-home) .signal-kicker{font-size:10.5px; letter-spacing:.14em}
+body:not(.page-home) .signal-title{margin:4px 0 6px; font-size:clamp(20px,2vw,26px); line-height:1.2; letter-spacing:-.02em}
+body:not(.page-home) .signal-title em{color:inherit}
+body:not(.page-home) .signal-deck{font-size:13px; line-height:1.6; max-width:78ch; color:rgba(255,255,255,.66)}
+body:not(.page-home) .signal-actions{display:none}
 body:not(.page-home) .signal-readout{display:none}
-body:not(.page-home) .src{margin-top:10px}
+body:not(.page-home) .src{margin-top:8px; font-size:11px}
 @media(min-width:1180px){
   html:not([data-layout="mobile"]) body.page-home .signal-hero{padding:56px 0 54px}
   html:not([data-layout="mobile"]) body.page-home .signal-hero .wrap{display:grid; grid-template-columns:minmax(0,1.04fr) minmax(430px,.96fr); column-gap:56px; align-items:end}
@@ -822,9 +825,9 @@ html[data-skin="dark"] .intake-step span,html[data-skin="dark"] .acc-code,html[d
   .hero-proof{margin-top:24px}
   .home-fold{margin-bottom:32px; padding-bottom:24px}
   .home-fold-head h3{font-size:22px}
-  body:not(.page-home) .signal-hero{padding:20px 18px 22px; min-height:0}
-  body:not(.page-home) .signal-title{font-size:clamp(24px,7.4vw,32px); margin:6px 0 8px}
-  body:not(.page-home) .signal-deck{font-size:13px}
+  body:not(.page-home) .signal-hero{padding:12px 18px 14px; min-height:0}
+  body:not(.page-home) .signal-title{font-size:clamp(19px,5.4vw,23px); margin:4px 0 5px}
+  body:not(.page-home) .signal-deck{font-size:12.5px; line-height:1.55}
   .hero-topline{gap:12px; margin-bottom:20px}
   .hero-search{max-width:none; flex-basis:100%}
   .intake-status{grid-template-columns:1fr 1fr}
@@ -866,7 +869,7 @@ html[data-skin="dark"] .intake-step span,html[data-skin="dark"] .acc-code,html[d
         </div>
       </div>
       <div class="signal-kicker">ABOUT / 关于</div>
-      <h1 class="signal-title">我们要做什么，<br><em>不做什么。</em></h1>
+      <h1 class="signal-title">关于</h1>
       <p class="signal-deck">项目必要性、公正机制、共建方式与明确非目标：不做第二个贴吧、营销号或排行榜站。</p>
       <div class="signal-actions">
         <a class="signal-cta" href="discover.html" data-page="discover">发现成员 <span aria-hidden="true">↗</span></a>
