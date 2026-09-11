@@ -477,6 +477,62 @@ section .hint{color:var(--muted); font-size:13.5px; margin:0 0 22px; max-width:6
   .rp-item .rp-m{grid-column:2 / 3}
   .rp-extra-cols{grid-template-columns:1fr}
 }
+
+/* ===== 48日报 · 体育报纸版式（2026-09-11 改版）=====
+   参照体育报纸的阅读习惯：报头双线 + 期号反白 / 栏目头用色块 / 正文与榜单左右分栏 /
+   积分榜大号名次 / 底部「人事动态」栏。只使用既有 token，不引入外部模板色。 */
+/* 报头布局与配色在下方 `.editorial-main .rp-masthead` 段定义（首页是唯一有日报的页面）；
+   这里只放期号徽标的默认样式与数据条/分栏等新栏目。 */
+.rp-edition{display:inline-flex; align-items:center; background:var(--ink); color:var(--card-bg);
+  font-size:11.5px; font-weight:900; letter-spacing:.1em; padding:3px 9px; border-radius:3px; margin-right:8px}
+.rp-databar{display:grid; grid-template-columns:repeat(auto-fit,minmax(94px,1fr)); border-bottom:1px solid var(--line); margin:0 0 14px}
+.rp-data{border-right:1px solid var(--line); padding:11px 12px 12px 0; min-width:0}
+.rp-data:last-child{border-right:0}
+.rp-data b{display:block; font-size:clamp(21px,2.5vw,29px); font-weight:900; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.rp-data b i{font-style:normal; font-size:.45em; font-weight:800; color:var(--muted); margin-left:3px}
+.rp-data span{display:block; margin-top:5px; font-size:11px; color:var(--muted); letter-spacing:.1em; font-weight:700}
+.rp-lead{grid-template-columns:minmax(0,1fr) minmax(210px,300px); gap:24px; margin:16px 0 0;
+  padding-bottom:16px; border-bottom:1px solid var(--line)}
+.rp-kicker{font-size:11.5px; letter-spacing:.14em; border-left:3px solid var(--accent); padding-left:8px; margin-bottom:9px}
+.rp-headline{font-size:clamp(23px,3.2vw,36px); font-weight:900; line-height:1.22; letter-spacing:-.015em; margin-bottom:10px}
+.rp-summary{font-size:14px; -webkit-line-clamp:4}
+.rp-sec{display:flex; align-items:baseline; gap:9px; font-size:14.5px; font-weight:900; letter-spacing:.06em;
+  border-bottom:2px solid var(--ink); padding:0 0 7px; margin:20px 0 12px}
+.rp-sec::before{content:""; width:9px; height:9px; background:var(--accent); transform:translateY(-2px)}
+.rp-sec em{font-style:normal; font-size:10px; font-weight:800; letter-spacing:.18em; color:var(--muted)}
+/* 主体两栏：左正文 / 右榜单。窄屏切单列时必须用 minmax(0,1fr)，
+   否则 1fr 的 min 是 min-content，会被长数字串撑破容器（实测 492 > 472）。 */
+.rp-body{display:grid; grid-template-columns:minmax(0,1.62fr) minmax(248px,.38fr); gap:0; min-width:0}
+.rp-main{min-width:0; padding-right:22px}
+.rp-aside{min-width:0; border-left:1px solid var(--line); padding-left:22px}
+.rp-board-row{display:grid; grid-template-columns:30px minmax(0,1fr); gap:9px; align-items:start;
+  padding:9px 0; border-bottom:1px dotted var(--line)}
+.rp-board-row:last-child{border-bottom:0}
+.rp-board-rank{font-size:22px; font-weight:900; line-height:1; color:var(--accent-deep); font-variant-numeric:tabular-nums}
+.rp-board-main{min-width:0}
+.rp-board-t{font-size:13.5px; font-weight:800; line-height:1.45}
+.rp-board-w{font-size:11.5px; color:var(--muted); line-height:1.55; margin-top:3px}
+.rp-move{display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr); gap:8px; align-items:baseline;
+  padding:8px 0; border-bottom:1px dotted var(--line); font-size:13px}
+.rp-move:last-child{border-bottom:0}
+.rp-move-k{font-size:11px; font-weight:900; letter-spacing:.06em; color:var(--card-bg); background:var(--accent-deep);
+  padding:2px 6px; border-radius:3px; white-space:nowrap}
+.rp-move-t{min-width:0; line-height:1.5}
+.rp-move-t b{font-weight:800}
+.rp-move-d{display:block; font-size:11px; color:var(--muted); margin-top:2px}
+@media(max-width:1100px){
+  .rp-body{grid-template-columns:minmax(0,1fr)}
+  .rp-main,.rp-aside{max-width:100%}
+  .rp-main{padding-right:0}
+  .rp-aside{border-left:0; border-top:1px solid var(--line); padding-left:0; padding-top:4px}
+}
+@media(max-width:767px){
+  .rp-masthead{grid-template-columns:1fr}
+  .rp-sub{text-align:left}
+  .rp-databar{grid-template-columns:1fr 1fr}
+  .rp-data:nth-child(2n){border-right:0}
+}
 footer{max-width:1120px; margin:0 auto; padding:8px 20px 44px; width:100%; color:var(--muted); font-size:12.5px}
 footer a{color:var(--muted)}
 .about p{font-size:14px; color:var(--ink)}
@@ -662,15 +718,47 @@ html[data-layout="mobile"] footer{width:100%; max-width:1120px; margin:0 auto; p
 .editorial-main .card:hover{transform:none; box-shadow:0 12px 28px rgba(18,7,11,.14)}
 .editorial-main .rp-masthead{border-bottom:1px solid var(--stone-700)}
 .editorial-main .rp-masthead{display:flex; align-items:end; justify-content:space-between; gap:18px; padding:16px 18px; color:#fff; background:linear-gradient(100deg,var(--rose-900),var(--rose-700) 58%,var(--coral)); border:0}
-.editorial-main .rp-title,.editorial-main .rp-title em,.editorial-main .rp-sub{color:#fff}
-.editorial-main .rp-sub{max-width:42ch; font-size:12px; line-height:1.55; opacity:.9; text-align:right}
+.editorial-main .rp-title,.editorial-main .rp-sub{color:#fff}
+.editorial-main .rp-sub{max-width:42ch; font-size:12px; line-height:1.55; opacity:.92; text-align:right}
 .editorial-main .rp-title{font-size:clamp(30px,4vw,48px)}
-.editorial-main .rp-title em{color:var(--rose-700)}
+/* 「48日报」原本用 rose-700，压在深红渐变报头上几乎不可读；改用浅粉保证对比度 */
+.editorial-main .rp-title em{color:var(--rose-200); font-size:.6em; letter-spacing:.06em}
+.editorial-main .rp-edition{background:rgba(0,0,0,.35); color:#fff; border:1px solid rgba(255,255,255,.35)}
 .editorial-main .rp-chip{border-radius:0}
 .editorial-main .rp-lead{grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr); gap:42px; padding:24px 0 36px}
 .editorial-main .rp-headline{font-size:clamp(26px,3.5vw,48px); line-height:1.15}
 .editorial-main .rp-figure img{border-radius:0; border:0}
 .editorial-main .rp-sec{font-size:11px; letter-spacing:.18em; text-transform:uppercase; border-left:0; border-bottom:2px solid var(--rose-900); padding:0 0 10px}
+/* 报纸正文靠文字密度与规则线分栏，不靠底色：条目不带背景；
+   头条图限高，避免一张竖图把正文挤出首屏；榜单标题最多两行。 */
+.editorial-main .rp-view-item,.editorial-main .rp-item,.editorial-main .rp-board-row,.editorial-main .rp-move{background:transparent}
+.editorial-main .rp-figure img{max-height:460px; object-fit:cover; object-position:top center}
+.editorial-main .rp-board-t{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.editorial-main .rp-board-t .jump-link,.editorial-main .rp-move-t .jump-link{text-align:left; font-size:13.5px; font-weight:800; line-height:1.45}
+/* 报纸版式有大量短列与长英文/数字串（SNH482026、话题标签、日期），
+   必须允许任意断行并放开网格项最小宽度，否则窄屏会被 min-content 撑破。 */
+.editorial-main .rp-main,.editorial-main .rp-aside{min-width:0; max-width:100%}
+.editorial-main .rp-t,.editorial-main .rp-view-t,.editorial-main .rp-board-t,
+.editorial-main .rp-move-t,.editorial-main .rp-m,.editorial-main .rp-view-m,
+.editorial-main .rp-board-w,.editorial-main .rp-move-d,.editorial-main .rp-summary,
+.editorial-main .rp-headline,.editorial-main .rp-sub{overflow-wrap:anywhere}
+.editorial-main .rp-item,.editorial-main .rp-item-with-image{grid-template-columns:44px minmax(0,auto) minmax(0,1fr)}
+/* 看点序号改为报纸式大号数字，去掉圆角色块 */
+.editorial-main .rp-view-item{grid-template-columns:30px minmax(0,1fr)}
+.editorial-main .rp-view-num{background:transparent; color:var(--rose-900); border-radius:0;
+  width:auto; height:auto; justify-content:flex-start; font-size:21px; font-weight:900; line-height:1.15; font-variant-numeric:tabular-nums}
+/* 窄屏：头条改单栏（否则 220px 图列会撑出横向滚动），数据条两列，头条图限高 */
+@media(max-width:900px){
+  .editorial-main .rp-lead{grid-template-columns:1fr; gap:18px}
+}
+@media(max-width:767px){
+  .editorial-main .rp-masthead{align-items:start; flex-direction:column; gap:8px}
+  .editorial-main .rp-sub{text-align:left; max-width:none}
+  .editorial-main .rp-figure img{max-height:300px}
+  .editorial-main .rp-data{padding:9px 10px 10px 0}
+  .editorial-main .rp-board-row{grid-template-columns:26px minmax(0,1fr); gap:7px}
+  .editorial-main .rp-board-rank{font-size:19px}
+}
 .editorial-main .rp-item{padding:15px 0; border-bottom:1px solid var(--stone-200)}
 .hero-proof{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr); gap:0; max-width:980px; margin-top:42px; border:1px solid rgba(255,255,255,.24); background:rgba(18,2,8,.42)}
 .hero-proof-main{padding:24px 26px}.hero-proof-side{padding:24px 26px; border-left:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06)}
@@ -898,7 +986,7 @@ html[data-skin="dark"] .intake-step span,html[data-skin="dark"] .acc-code,html[d
 
 <script>
 const PAGE_ID = "picks";
-const DATA = {"as_of": "2026-09-01", "as_of_cutoff": "2026-09-07", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 13, "member_events": 20, "feed_7d": 1, "feed_30d": 101}, "picks": [{"id": "bilibili-up", "name": "B站高质量 UP 主", "desc": "做 48 系数据可视化、杂谈盘点、科普、录屏、切片、安利的民间创作者", "items": [{"name": "老浪三个蛋", "url": "https://search.bilibili.com/upuser?keyword=%E8%80%81%E6%B5%AA%E4%B8%89%E4%B8%AA%E8%9B%8B", "desc": "塞纳河杂谈系列、十年总选回顾（万字盘点）", "verified": true, "source": "检索确认"}, {"name": "宇宙超人泽塔", "url": "https://search.bilibili.com/upuser?keyword=%E5%AE%87%E5%AE%99%E8%B6%85%E4%BA%BA%E6%B3%BD%E5%A1%94", "desc": "总选名次/集资/CP 数据可视化（历届总决选排名演变史、TOP16 集资变化）", "verified": true, "source": "检索审核", "note": "已确认 UID 419788422，塞纳河数据可视化头部账号", "uid": "419788422"}, {"name": "Angel1Wings", "url": "https://search.bilibili.com/upuser?keyword=Angel1Wings", "desc": "成员直播/舞台切片与搬运（简介「现在主更塞纳河」）", "verified": true, "source": "检索审核", "note": "已确认 UID 311789726，账号简介明确「现在主更塞纳河」", "uid": "311789726"}, {"name": "红头发的耳语者", "url": "https://search.bilibili.com/upuser?keyword=%E7%BA%A2%E5%A4%B4%E5%8F%91%E7%9A%84%E8%80%B3%E8%AF%AD%E8%80%85", "desc": "口袋48 直播间实况录屏 / 总选名次播报前飞票名场面", "verified": true, "source": "检索审核", "note": "已确认 UID 26873498，口袋48 直播录屏为主", "uid": "26873498"}, {"name": "藤条墩墩TTDD", "url": "https://search.bilibili.com/upuser?keyword=%E8%97%A4%E6%9D%A1%E5%A2%A9%E5%A2%A9TTDD", "desc": "歌曲安利点评（《塞纳河原创神作》系列）与《黄金五期众生相》盘点", "verified": true, "source": "检索审核", "note": "已确认 UID 83525032，简介「暂不更新」显示已停更", "uid": "83525032"}, {"name": "塞纳河数据库", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E6%95%B0%E6%8D%AE%E5%BA%93", "desc": "总选鬼畜/数据向剪辑、cp 与 MC 话题向内容", "verified": true, "source": "检索审核", "note": "已确认 UID 1062465255，简介「头贼铁啥都发，爱嗑cp爱吃瓜」", "uid": "1062465255"}, {"name": "欧尼不打烊", "url": "https://search.bilibili.com/upuser?keyword=%E6%AC%A7%E5%B0%BC%E4%B8%8D%E6%89%93%E7%83%8A", "desc": "综合娱乐账号，兼做塞纳河 CP 舞台混剪 / 舞台安利", "verified": true, "source": "检索审核", "note": "已确认 UID 3493135386675904（16位），综合娱乐号非纯河内账号", "uid": "3493135386675904"}, {"name": "被小鞠飞鞋砸到的鬼", "url": "https://search.bilibili.com/upuser?keyword=%E8%A2%AB%E5%B0%8F%E9%9E%A0%E9%A3%9E%E9%9E%8B%E7%A0%B8%E5%88%B0%E7%9A%84%E9%AC%BC", "desc": "鞠婧祎与 SNH48 Team NII 舞台混剪/防撞车切片（简介「元恩狗➕鞠推」）", "verified": true, "source": "检索审核", "note": "已确认 UID 22041102，原档案「科普向」描述与实况不符，实为舞台混剪", "uid": "22041102"}, {"name": "SNH48-憨批马", "url": "https://search.bilibili.com/upuser?keyword=SNH48-%E6%86%A8%E6%89%B9%E9%A9%AC", "desc": "48 系关系科普内容的插画/摄影署名者", "verified": false, "source": "检索审核", "note": "未检索到独立 B站 账号与 UID；名字仅见于「塞纳河补习班」科普视频/专栏的片尾插画与照片署名"}, {"name": "喵喵的小树", "url": "https://search.bilibili.com/upuser?keyword=%E5%96%B5%E5%96%B5%E7%9A%84%E5%B0%8F%E6%A0%91", "desc": "总选暗票 / 饺子榜数据追踪（「总选第46天+暗票数据」系列）", "verified": true, "source": "检索审核", "note": "已确认 UID 486851021，简介「从2020年开始入坑」", "uid": "486851021"}, {"name": "世界第一有趣", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%96%E7%95%8C%E7%AC%AC%E4%B8%80%E6%9C%89%E8%B6%A3", "desc": "名场面 / 搞笑剪辑（《关于小偶像那些被人唠一辈子的搞笑事情》系列）", "verified": true, "source": "检索审核", "note": "已确认 UID 28388162", "uid": "28388162"}, {"name": "塞纳河vocal出警人", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3vocal%E5%87%BA%E8%AD%A6%E4%BA%BA", "desc": "唱功/vocal 点评（开麦抽象时刻系列 + 消音版 + 最强 Vocal 盘点）", "verified": true, "source": "检索审核", "note": "已确认 UID 1378236495，圈内 vocal 点评主力号", "uid": "1378236495"}, {"name": "塞纳河河王", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E6%B2%B3%E7%8E%8B", "desc": "河内圈知名账号（综合盘点）", "verified": true, "source": "检索确认"}, {"name": "南柯十七梦", "url": "https://search.bilibili.com/upuser?keyword=%E5%8D%97%E6%9F%AF%E5%8D%81%E4%B8%83%E6%A2%A6", "desc": "总选历史盘点（历届总选第一/排名回顾）+ 河妹直播杂谈", "verified": true, "source": "检索审核", "note": "已确认 UID 15079963，历届总选第一盘点作者，简介「关注河妹和偶像」", "uid": "15079963"}, {"name": "用户5289167", "url": "https://search.bilibili.com/upuser?keyword=%E7%94%A8%E6%88%B75289167", "desc": "各队公演完整录屏（弹幕版，SNH48 官方账号公演录播）", "verified": true, "source": "检索审核", "note": "已确认 UID 80033684，简介「各队公演都有录」", "uid": "80033684"}, {"name": "寒影AkiNa", "url": "https://search.bilibili.com/upuser?keyword=%E5%AF%92%E5%BD%B1AkiNa", "desc": "SNH48 GROUP 总决选演唱会/BEST50/剧场公演全程直播回放，河内最全公演录播 UP 之一", "verified": true, "source": "检索审核", "uid": "1315101", "category": "公演录屏"}, {"name": "暗靚祎聲32", "url": "https://search.bilibili.com/upuser?keyword=%E6%9A%97%E9%9D%9A%E7%A5%8E%E8%81%B232", "desc": "GNZ48 口袋48 直播直录 + 公演录屏（现以卢静等成员直播为主）", "verified": true, "source": "检索审核", "uid": "36225084", "category": "口袋切片"}, {"name": "明轩絆", "url": "https://search.bilibili.com/upuser?keyword=%E6%98%8E%E8%BD%A9%E7%B5%86", "desc": "SNH48 成员口袋48 直播电台合集 / 录屏", "verified": true, "source": "检索审核", "uid": "55903945", "category": "口袋切片"}, {"name": "冰瓜投手5", "url": "https://search.bilibili.com/upuser?keyword=%E5%86%B0%E7%93%9C%E6%8A%95%E6%89%8B5", "desc": "《塞纳河唱功天梯榜》系列，唱功主观盘点（非官方排名）", "verified": true, "source": "检索审核", "uid": "282832655", "category": "vocal点评"}, {"name": "嘉欣Cansiny", "url": "https://search.bilibili.com/upuser?keyword=%E5%98%89%E6%AC%A3Cansiny", "desc": "总选 TOP16 集资变化等数据可视化（投稿塞纳河相关）", "verified": true, "source": "检索审核", "uid": "4377132", "category": "数据可视化"}, {"name": "为H2打call", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%BAH2%E6%89%93call", "desc": "总选排名公布环节录播/盘点（十三选御三家、第4-16位排名公布等）", "verified": true, "source": "检索审核", "uid": "119015136", "category": "总选盘点"}, {"name": "不是橘外人", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%8D%E6%98%AF%E6%A9%98%E5%A4%96%E4%BA%BA", "desc": "塞纳河 CP 舞台 B站播放量排行等数据盘点 + CP 剪辑（简介「浪遍那条河」）", "verified": true, "source": "检索审核", "uid": "226977633", "category": "数据可视化"}, {"name": "康大三", "url": "https://search.bilibili.com/upuser?keyword=%E5%BA%B7%E5%A4%A7%E4%B8%89", "desc": "塞纳河专属 公演/舞台/总选单/声动星河 锐评 + reaction（《公演从夯到拉锐评》系列），圈内「从夯到拉」锐评系列主力号", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「推し可以有不止一位吧」；代表作《【SNH48】公演从夯到拉锐评·上/下》《vocal总选指北》、2026-08《十三届总选陪看 reaction》，粉丝约 3125，持续更新", "uid": "12533276"}, {"name": "香菜都给我哦", "url": "https://search.bilibili.com/upuser?keyword=%E9%A6%99%E8%8F%9C%E9%83%BD%E7%BB%99%E6%88%91%E5%93%A6", "desc": "8 年河粉「塞纳河老人 reaction」系列，总选/公演舞台纯享逐场边看边评（主更丝芭、舞台向）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「我是VN，8年河粉S喵。视频只看女生 主更丝芭 其它挑感兴趣的看」；2026-08《十三届年度青春盛典舞台纯享 reaction》持续更新", "uid": "2011610557"}, {"name": "e不起来一点儿", "url": "https://search.bilibili.com/upuser?keyword=e%E4%B8%8D%E8%B5%B7%E6%9D%A5%E4%B8%80%E7%82%B9%E5%84%BF", "desc": "路人/内娱·韩娱视角的舞台与 CP reaction 号，大量 SNH48/GNZ48 舞台、练习室、MV reaction（非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「啥都爱re点儿私信推，看置顶！（基本六点更新」；约 440 投稿、5644 粉，2026-08 仍有 GNZ48 舞台 reaction 更新", "uid": "3546605066127521"}, {"name": "记得多吃晚饭", "url": "https://search.bilibili.com/upuser?keyword=%E8%AE%B0%E5%BE%97%E5%A4%9A%E5%90%83%E6%99%9A%E9%A5%AD", "desc": "女团舞台 reaction 号，大量 SNH48 舞台/MC/MV reaction（兼接 AKB48 Team SH 等充电专场，非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「接充电专场，私信我即可，女团舞台、cp、综艺、影视剧均可」；2026-08《总选 reaction》等持续更新", "uid": "3546954699115205"}, {"name": "DcM_K", "url": "https://search.bilibili.com/upuser?keyword=DcM_K", "desc": "《韩娱人入河之旅》系列作者，韩娱粉视角看 SNH48 公演/舞台 reaction（非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "系列《韩娱人入河之旅#1~#43》（如 #1「SNH48 歌曲向舞台Reaction」、#43「Team SII《重生计划》公演Reaction」）已核实存在且稳定连载；UID 未取得（B站检索接口 412 限流）"}]}, {"id": "weibo", "name": "微博资讯号 / 后花园", "desc": "48 圈资讯号、数据号、应援会（民间「后花园」）", "items": [{"name": "SNH48-饺子榜", "url": "https://s.weibo.com/user?q=SNH48-%E9%A5%BA%E5%AD%90%E6%A6%9C", "desc": "总选集资 / 饺子榜数据统计（圈内知名数据号）", "verified": true, "source": "检索审核", "note": "2018-2020 多方新闻（经济观察网/钛媒体/界面等）佐证其存在；未检索到当前活跃账号与 UID，疑似停更或更名（2ch 记录 2019 年该榜 UID 为 2827120175，现指向「塞纳河饺子铺」）"}, {"name": "LBS48", "url": "https://s.weibo.com/user?q=LBS48", "desc": "塞纳河资讯 + 总选暗账/数据统计（娱乐博主头条文章作者）", "verified": true, "source": "检索审核", "note": "已确认 UID 5512350098，约 47.4 万粉，持续活跃", "uid": "5512350098"}, {"name": "塞纳河大腿子", "url": "https://s.weibo.com/user?q=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E5%A4%A7%E8%85%BF%E5%AD%90", "desc": "总选宣1/数据/圈内动态（娱乐博主微博原创视频博主）", "verified": true, "source": "检索审核", "note": "已确认 UID 7721963035，约 24.9 万粉", "uid": "7721963035"}, {"name": "塞纳河饺子铺", "url": "https://s.weibo.com/user?q=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E9%A5%BA%E5%AD%90%E9%93%BA", "desc": "应援会数据核验（票数/切盘纠偏）", "verified": true, "source": "检索审核", "note": "已确认 UID 2827120175，仅约 708 粉，最后发帖约 2024-05，疑似停更", "uid": "2827120175"}]}, {"id": "community", "name": "贴吧 / 豆瓣小组", "desc": "48 圈讨论社区（本站已在聚合这些源的讨论流）", "items": [{"name": "生个女孩吧", "url": "https://tieba.baidu.com/f?kw=%E7%94%9F%E4%B8%AA%E5%A5%B3%E5%AD%A9", "desc": "瓜 / 讨论 / 黑话主阵地（原塞纳河后花园的替代）", "verified": true, "source": "已接入"}, {"name": "塞纳河路人组", "url": "https://www.douban.com/group/748875/", "desc": "豆瓣河粉圈层讨论，长文 / 数据 / 总选预测", "verified": true, "source": "已接入"}, {"name": "SNH48吧", "url": "https://tieba.baidu.com/f?kw=SNH48", "desc": "现役讨论吧", "verified": true, "source": "已接入"}]}], "picks_title": "河内导航", "picks_subtitle": "塞纳河圈内值得关注的 UP 主、资讯号与讨论社区"};
+const DATA = {"as_of": "2026-09-11", "as_of_cutoff": "2026-09-07", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 13, "member_events": 20, "feed_7d": 1, "feed_30d": 101}, "picks": [{"id": "bilibili-up", "name": "B站高质量 UP 主", "desc": "做 48 系数据可视化、杂谈盘点、科普、录屏、切片、安利的民间创作者", "items": [{"name": "老浪三个蛋", "url": "https://search.bilibili.com/upuser?keyword=%E8%80%81%E6%B5%AA%E4%B8%89%E4%B8%AA%E8%9B%8B", "desc": "塞纳河杂谈系列、十年总选回顾（万字盘点）", "verified": true, "source": "检索确认"}, {"name": "宇宙超人泽塔", "url": "https://search.bilibili.com/upuser?keyword=%E5%AE%87%E5%AE%99%E8%B6%85%E4%BA%BA%E6%B3%BD%E5%A1%94", "desc": "总选名次/集资/CP 数据可视化（历届总决选排名演变史、TOP16 集资变化）", "verified": true, "source": "检索审核", "note": "已确认 UID 419788422，塞纳河数据可视化头部账号", "uid": "419788422"}, {"name": "Angel1Wings", "url": "https://search.bilibili.com/upuser?keyword=Angel1Wings", "desc": "成员直播/舞台切片与搬运（简介「现在主更塞纳河」）", "verified": true, "source": "检索审核", "note": "已确认 UID 311789726，账号简介明确「现在主更塞纳河」", "uid": "311789726"}, {"name": "红头发的耳语者", "url": "https://search.bilibili.com/upuser?keyword=%E7%BA%A2%E5%A4%B4%E5%8F%91%E7%9A%84%E8%80%B3%E8%AF%AD%E8%80%85", "desc": "口袋48 直播间实况录屏 / 总选名次播报前飞票名场面", "verified": true, "source": "检索审核", "note": "已确认 UID 26873498，口袋48 直播录屏为主", "uid": "26873498"}, {"name": "藤条墩墩TTDD", "url": "https://search.bilibili.com/upuser?keyword=%E8%97%A4%E6%9D%A1%E5%A2%A9%E5%A2%A9TTDD", "desc": "歌曲安利点评（《塞纳河原创神作》系列）与《黄金五期众生相》盘点", "verified": true, "source": "检索审核", "note": "已确认 UID 83525032，简介「暂不更新」显示已停更", "uid": "83525032"}, {"name": "塞纳河数据库", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E6%95%B0%E6%8D%AE%E5%BA%93", "desc": "总选鬼畜/数据向剪辑、cp 与 MC 话题向内容", "verified": true, "source": "检索审核", "note": "已确认 UID 1062465255，简介「头贼铁啥都发，爱嗑cp爱吃瓜」", "uid": "1062465255"}, {"name": "欧尼不打烊", "url": "https://search.bilibili.com/upuser?keyword=%E6%AC%A7%E5%B0%BC%E4%B8%8D%E6%89%93%E7%83%8A", "desc": "综合娱乐账号，兼做塞纳河 CP 舞台混剪 / 舞台安利", "verified": true, "source": "检索审核", "note": "已确认 UID 3493135386675904（16位），综合娱乐号非纯河内账号", "uid": "3493135386675904"}, {"name": "被小鞠飞鞋砸到的鬼", "url": "https://search.bilibili.com/upuser?keyword=%E8%A2%AB%E5%B0%8F%E9%9E%A0%E9%A3%9E%E9%9E%8B%E7%A0%B8%E5%88%B0%E7%9A%84%E9%AC%BC", "desc": "鞠婧祎与 SNH48 Team NII 舞台混剪/防撞车切片（简介「元恩狗➕鞠推」）", "verified": true, "source": "检索审核", "note": "已确认 UID 22041102，原档案「科普向」描述与实况不符，实为舞台混剪", "uid": "22041102"}, {"name": "SNH48-憨批马", "url": "https://search.bilibili.com/upuser?keyword=SNH48-%E6%86%A8%E6%89%B9%E9%A9%AC", "desc": "48 系关系科普内容的插画/摄影署名者", "verified": false, "source": "检索审核", "note": "未检索到独立 B站 账号与 UID；名字仅见于「塞纳河补习班」科普视频/专栏的片尾插画与照片署名"}, {"name": "喵喵的小树", "url": "https://search.bilibili.com/upuser?keyword=%E5%96%B5%E5%96%B5%E7%9A%84%E5%B0%8F%E6%A0%91", "desc": "总选暗票 / 饺子榜数据追踪（「总选第46天+暗票数据」系列）", "verified": true, "source": "检索审核", "note": "已确认 UID 486851021，简介「从2020年开始入坑」", "uid": "486851021"}, {"name": "世界第一有趣", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%96%E7%95%8C%E7%AC%AC%E4%B8%80%E6%9C%89%E8%B6%A3", "desc": "名场面 / 搞笑剪辑（《关于小偶像那些被人唠一辈子的搞笑事情》系列）", "verified": true, "source": "检索审核", "note": "已确认 UID 28388162", "uid": "28388162"}, {"name": "塞纳河vocal出警人", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3vocal%E5%87%BA%E8%AD%A6%E4%BA%BA", "desc": "唱功/vocal 点评（开麦抽象时刻系列 + 消音版 + 最强 Vocal 盘点）", "verified": true, "source": "检索审核", "note": "已确认 UID 1378236495，圈内 vocal 点评主力号", "uid": "1378236495"}, {"name": "塞纳河河王", "url": "https://search.bilibili.com/upuser?keyword=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E6%B2%B3%E7%8E%8B", "desc": "河内圈知名账号（综合盘点）", "verified": true, "source": "检索确认"}, {"name": "南柯十七梦", "url": "https://search.bilibili.com/upuser?keyword=%E5%8D%97%E6%9F%AF%E5%8D%81%E4%B8%83%E6%A2%A6", "desc": "总选历史盘点（历届总选第一/排名回顾）+ 河妹直播杂谈", "verified": true, "source": "检索审核", "note": "已确认 UID 15079963，历届总选第一盘点作者，简介「关注河妹和偶像」", "uid": "15079963"}, {"name": "用户5289167", "url": "https://search.bilibili.com/upuser?keyword=%E7%94%A8%E6%88%B75289167", "desc": "各队公演完整录屏（弹幕版，SNH48 官方账号公演录播）", "verified": true, "source": "检索审核", "note": "已确认 UID 80033684，简介「各队公演都有录」", "uid": "80033684"}, {"name": "寒影AkiNa", "url": "https://search.bilibili.com/upuser?keyword=%E5%AF%92%E5%BD%B1AkiNa", "desc": "SNH48 GROUP 总决选演唱会/BEST50/剧场公演全程直播回放，河内最全公演录播 UP 之一", "verified": true, "source": "检索审核", "uid": "1315101", "category": "公演录屏"}, {"name": "暗靚祎聲32", "url": "https://search.bilibili.com/upuser?keyword=%E6%9A%97%E9%9D%9A%E7%A5%8E%E8%81%B232", "desc": "GNZ48 口袋48 直播直录 + 公演录屏（现以卢静等成员直播为主）", "verified": true, "source": "检索审核", "uid": "36225084", "category": "口袋切片"}, {"name": "明轩絆", "url": "https://search.bilibili.com/upuser?keyword=%E6%98%8E%E8%BD%A9%E7%B5%86", "desc": "SNH48 成员口袋48 直播电台合集 / 录屏", "verified": true, "source": "检索审核", "uid": "55903945", "category": "口袋切片"}, {"name": "冰瓜投手5", "url": "https://search.bilibili.com/upuser?keyword=%E5%86%B0%E7%93%9C%E6%8A%95%E6%89%8B5", "desc": "《塞纳河唱功天梯榜》系列，唱功主观盘点（非官方排名）", "verified": true, "source": "检索审核", "uid": "282832655", "category": "vocal点评"}, {"name": "嘉欣Cansiny", "url": "https://search.bilibili.com/upuser?keyword=%E5%98%89%E6%AC%A3Cansiny", "desc": "总选 TOP16 集资变化等数据可视化（投稿塞纳河相关）", "verified": true, "source": "检索审核", "uid": "4377132", "category": "数据可视化"}, {"name": "为H2打call", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%BAH2%E6%89%93call", "desc": "总选排名公布环节录播/盘点（十三选御三家、第4-16位排名公布等）", "verified": true, "source": "检索审核", "uid": "119015136", "category": "总选盘点"}, {"name": "不是橘外人", "url": "https://search.bilibili.com/upuser?keyword=%E4%B8%8D%E6%98%AF%E6%A9%98%E5%A4%96%E4%BA%BA", "desc": "塞纳河 CP 舞台 B站播放量排行等数据盘点 + CP 剪辑（简介「浪遍那条河」）", "verified": true, "source": "检索审核", "uid": "226977633", "category": "数据可视化"}, {"name": "康大三", "url": "https://search.bilibili.com/upuser?keyword=%E5%BA%B7%E5%A4%A7%E4%B8%89", "desc": "塞纳河专属 公演/舞台/总选单/声动星河 锐评 + reaction（《公演从夯到拉锐评》系列），圈内「从夯到拉」锐评系列主力号", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「推し可以有不止一位吧」；代表作《【SNH48】公演从夯到拉锐评·上/下》《vocal总选指北》、2026-08《十三届总选陪看 reaction》，粉丝约 3125，持续更新", "uid": "12533276"}, {"name": "香菜都给我哦", "url": "https://search.bilibili.com/upuser?keyword=%E9%A6%99%E8%8F%9C%E9%83%BD%E7%BB%99%E6%88%91%E5%93%A6", "desc": "8 年河粉「塞纳河老人 reaction」系列，总选/公演舞台纯享逐场边看边评（主更丝芭、舞台向）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「我是VN，8年河粉S喵。视频只看女生 主更丝芭 其它挑感兴趣的看」；2026-08《十三届年度青春盛典舞台纯享 reaction》持续更新", "uid": "2011610557"}, {"name": "e不起来一点儿", "url": "https://search.bilibili.com/upuser?keyword=e%E4%B8%8D%E8%B5%B7%E6%9D%A5%E4%B8%80%E7%82%B9%E5%84%BF", "desc": "路人/内娱·韩娱视角的舞台与 CP reaction 号，大量 SNH48/GNZ48 舞台、练习室、MV reaction（非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「啥都爱re点儿私信推，看置顶！（基本六点更新」；约 440 投稿、5644 粉，2026-08 仍有 GNZ48 舞台 reaction 更新", "uid": "3546605066127521"}, {"name": "记得多吃晚饭", "url": "https://search.bilibili.com/upuser?keyword=%E8%AE%B0%E5%BE%97%E5%A4%9A%E5%90%83%E6%99%9A%E9%A5%AD", "desc": "女团舞台 reaction 号，大量 SNH48 舞台/MC/MV reaction（兼接 AKB48 Team SH 等充电专场，非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "简介「接充电专场，私信我即可，女团舞台、cp、综艺、影视剧均可」；2026-08《总选 reaction》等持续更新", "uid": "3546954699115205"}, {"name": "DcM_K", "url": "https://search.bilibili.com/upuser?keyword=DcM_K", "desc": "《韩娱人入河之旅》系列作者，韩娱粉视角看 SNH48 公演/舞台 reaction（非塞纳河专属）", "verified": true, "source": "????", "category": "舞蹈点评", "note": "系列《韩娱人入河之旅#1~#43》（如 #1「SNH48 歌曲向舞台Reaction」、#43「Team SII《重生计划》公演Reaction」）已核实存在且稳定连载；UID 未取得（B站检索接口 412 限流）"}]}, {"id": "weibo", "name": "微博资讯号 / 后花园", "desc": "48 圈资讯号、数据号、应援会（民间「后花园」）", "items": [{"name": "SNH48-饺子榜", "url": "https://s.weibo.com/user?q=SNH48-%E9%A5%BA%E5%AD%90%E6%A6%9C", "desc": "总选集资 / 饺子榜数据统计（圈内知名数据号）", "verified": true, "source": "检索审核", "note": "2018-2020 多方新闻（经济观察网/钛媒体/界面等）佐证其存在；未检索到当前活跃账号与 UID，疑似停更或更名（2ch 记录 2019 年该榜 UID 为 2827120175，现指向「塞纳河饺子铺」）"}, {"name": "LBS48", "url": "https://s.weibo.com/user?q=LBS48", "desc": "塞纳河资讯 + 总选暗账/数据统计（娱乐博主头条文章作者）", "verified": true, "source": "检索审核", "note": "已确认 UID 5512350098，约 47.4 万粉，持续活跃", "uid": "5512350098"}, {"name": "塞纳河大腿子", "url": "https://s.weibo.com/user?q=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E5%A4%A7%E8%85%BF%E5%AD%90", "desc": "总选宣1/数据/圈内动态（娱乐博主微博原创视频博主）", "verified": true, "source": "检索审核", "note": "已确认 UID 7721963035，约 24.9 万粉", "uid": "7721963035"}, {"name": "塞纳河饺子铺", "url": "https://s.weibo.com/user?q=%E5%A1%9E%E7%BA%B3%E6%B2%B3%E9%A5%BA%E5%AD%90%E9%93%BA", "desc": "应援会数据核验（票数/切盘纠偏）", "verified": true, "source": "检索审核", "note": "已确认 UID 2827120175，仅约 708 粉，最后发帖约 2024-05，疑似停更", "uid": "2827120175"}]}, {"id": "community", "name": "贴吧 / 豆瓣小组", "desc": "48 圈讨论社区（本站已在聚合这些源的讨论流）", "items": [{"name": "生个女孩吧", "url": "https://tieba.baidu.com/f?kw=%E7%94%9F%E4%B8%AA%E5%A5%B3%E5%AD%A9", "desc": "瓜 / 讨论 / 黑话主阵地（原塞纳河后花园的替代）", "verified": true, "source": "已接入"}, {"name": "塞纳河路人组", "url": "https://www.douban.com/group/748875/", "desc": "豆瓣河粉圈层讨论，长文 / 数据 / 总选预测", "verified": true, "source": "已接入"}, {"name": "SNH48吧", "url": "https://tieba.baidu.com/f?kw=SNH48", "desc": "现役讨论吧", "verified": true, "source": "已接入"}]}], "picks_title": "河内导航", "picks_subtitle": "塞纳河圈内值得关注的 UP 主、资讯号与讨论社区"};
 const ARCHIVE = DATA.community_archive || {};
 
 /* 皮肤：浅色 / 薄荷 / 深色，三态循环，localStorage 持久化 */
@@ -1427,6 +1515,8 @@ function renderBrief(selectedDate = ''){
     const s = String(t || '');
     return s.length >= 16 ? s.slice(11, 16) : '';
   };
+  const n24 = (b.counts && b.counts.last_24h) || 0;
+  const nwin = (b.counts && b.counts.window) || 0;
   const fmtCount = n => {
     const v = n == null ? 0 : n;
     return v > 0 ? `${v} 条` : '暂无';
@@ -1452,8 +1542,15 @@ function renderBrief(selectedDate = ''){
   }
   h += `<div class="report"><header class="rp-masthead">`+
     `<div class="rp-title">48HOT<em> · 48日报</em></div>`+
-    `<div class="rp-sub">${esc(viewDate)} · ${weekdayCN(viewDate)} · 每日 09:00 更新一期 · ${esc(b.honest_line || '')}</div>`+
+    `<div class="rp-sub">${b.edition ? `<span class="rp-edition">第 ${esc(String(b.edition))} 期</span>` : ''}${esc(viewDate)} · ${weekdayCN(viewDate)} · 每日 09:00 更新一期<br>${esc((b.honest_line || '').split('（')[0])}</div>`+
     `</header>`;
+  h += `<div class="rp-databar">`+
+    `<div class="rp-data"><b>${n24}</b><span>24 小时新讯</span></div>`+
+    `<div class="rp-data"><b>${nwin}</b><span>近 ${esc(String(b.window_days || 7))} 天窗口</span></div>`+
+    `<div class="rp-data"><b>${(b.source_tags || []).length}</b><span>来源覆盖</span></div>`+
+    `<div class="rp-data"><b>${(b.hot_topics || []).length}</b><span>热点主题</span></div>`+
+    `<div class="rp-data"><b>${(b.event_updates || []).length}</b><span>追踪事件</span></div>`+
+    `</div>`;
   if(arc.length > 1){
     h += `<nav class="rp-dates"><span class="rp-dates-label">往期</span>${arc.slice(0, 30).map(p => pickBtn(p.brief_date)).join('')}</nav>`;
   }
@@ -1470,8 +1567,9 @@ function renderBrief(selectedDate = ''){
     }
     h += `</div>`;
   }
+  h += `<div class="rp-body"><div class="rp-main">`;
   if(viewpoints.length){
-    h += `<section class="rp-view"><div class="rp-sec">今日看点</div><ol class="rp-view-list">`;
+    h += `<section class="rp-view"><div class="rp-sec">今日看点<em>HIGHLIGHTS</em></div><ol class="rp-view-list">`;
     viewpoints.forEach((x, i) => {
       h += `<li class="rp-view-item"><span class="rp-view-num">${i + 1}</span>`+
         `<span class="rp-view-main"><span class="ch ${esc(x.channel)}">${esc(CH_NAME[x.channel] || x.channel)}</span>`+
@@ -1480,7 +1578,7 @@ function renderBrief(selectedDate = ''){
     });
     h += `</ol></section>`;
   }
-  h += `<section class="rp-tl"><div class="rp-sec">今日时间线</div>`;
+  h += `<section class="rp-tl"><div class="rp-sec">今日时间线<em>TIMELINE</em></div>`;
   if(!timeline.length){
     h += `<div class="empty">本窗口暂无新讯</div>`;
   }else{
@@ -1492,11 +1590,9 @@ function renderBrief(selectedDate = ''){
       if(!visibleItems.length) return;
       h += `<div class="rp-day"><div class="rp-day-head"><span class="rp-day-date">${esc(g.date)}</span><span class="rp-day-n">${g.items.length} 条</span></div>`;
       visibleItems.forEach(x => {
-        const media = x.image_url ? `<img class="rp-thumb" src="${esc(x.image_url)}" alt="${esc(x.image_alt || x.title)}" loading="lazy">` : '';
-        h += `<div class="rp-item${x.image_url ? ' rp-item-with-image' : ''}"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
+        h += `<div class="rp-item"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
           `<span class="ch ${esc(x.channel)}">${esc(CH_NAME[x.channel] || x.channel)}</span>`+
           `<span class="rp-t"><a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.title)}">${esc(compactTitle(x.title))}</a></span>`+
-          `${media}`+
           `<span class="rp-m">${esc(x.summary || '')}</span></div>`;
       });
       timelineShown += visibleItems.length;
@@ -1504,19 +1600,37 @@ function renderBrief(selectedDate = ''){
     });
     if(timelineTotal > timelineLimit) h += `<p class="rp-foot">已展示 ${timelineLimit} 条正式来源动态；其余 ${timelineTotal - timelineLimit} 条可在「现场」频道继续阅读。</p>`;
   }
-  h += `</section>`;
-  h += `<section class="rp-extra"><div class="rp-sec">事件进展</div><div class="rp-extra-cols">`;
-  (b.event_updates || []).slice(0, 6).forEach(e => {
-    h += `<div class="rp-extra-item"><span class="rp-extra-t">${jump(e.event, 'stories', storyAnchor(e))}</span><span class="rp-extra-m">${esc(e.latest)}</span></div>`;
-  });
-  h += `</div></section>`;
-  h += `<section class="rp-extra"><div class="rp-sec">今日热点</div><div class="rp-extra-cols">`;
-  (b.hot_topics || []).slice(0, 5).forEach(t => {
-    h += `<div class="rp-extra-item"><span class="rp-rank">${t.rank}</span><span class="rp-extra-t">${jump(t.title, 'hot', hotAnchor(t))}</span><span class="rp-extra-m">${esc(t.why_hot)}</span></div>`;
-  });
-  h += `</div></section>`;
+  h += `</section></div><div class="rp-aside">`;
+  if((b.hot_topics || []).length){
+    h += `<section><div class="rp-sec">热点榜<em>STANDINGS</em></div>`;
+    (b.hot_topics || []).slice(0, 6).forEach(t => {
+      h += `<div class="rp-board-row"><span class="rp-board-rank">${t.rank}</span>`+
+        `<span class="rp-board-main"><span class="rp-board-t">${jump(compactTitle(t.title, 46), 'hot', hotAnchor(t))}</span>`+
+        `<span class="rp-board-w">${esc(t.why_hot)}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  if((b.event_updates || []).length){
+    h += `<section><div class="rp-sec">事件进展<em>TRACKER</em></div>`;
+    (b.event_updates || []).slice(0, 5).forEach(e => {
+      h += `<div class="rp-move"><span class="rp-move-k">${e.item_count} 条</span>`+
+        `<span class="rp-move-t">${jump(e.event, 'stories', storyAnchor(e))}`+
+        `<span class="rp-move-d">${esc(e.latest)}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  if((b.member_moves || []).length){
+    h += `<section><div class="rp-sec">人事动态<em>MOVES</em></div>`;
+    (b.member_moves || []).forEach(m => {
+      h += `<div class="rp-move"><span class="rp-move-k">${esc(m.type || '动态')}</span>`+
+        `<span class="rp-move-t"><b>${esc(m.member)}</b>`+
+        `<span class="rp-move-d">${esc(m.latest_at || '')}${m.item_count ? ' · ' + m.item_count + ' 条来源' : ''}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  h += `</div></div>`;
   h += `<div class="brief-cta"><button class="jump-link cta-btn" data-section="feed">查看全部动态 →</button><button class="jump-link cta-btn" data-section="hot">完整热点榜 →</button></div>`;
-  h += `<p class="rp-foot">48日报 · 每日 09:00 由「采集 → 策展 → 热点 → 事件 → 简报」流水线生成一期，非实时刷新；可用上方日期切换往期正文。</p>`;
+  h += `<p class="rp-foot">48日报 · 每日 09:00 由「采集 → 策展 → 热点 → 事件 → 简报」流水线生成一期，非实时刷新；可用上方日期切换往期正文。${esc(b.honest_line || '') ? ' · ' + esc(b.honest_line) : ''}</p>`;
   h += `</div>`;
   el.innerHTML = h;
   bindJumps(el);

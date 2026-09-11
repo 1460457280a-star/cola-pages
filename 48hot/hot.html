@@ -477,6 +477,62 @@ section .hint{color:var(--muted); font-size:13.5px; margin:0 0 22px; max-width:6
   .rp-item .rp-m{grid-column:2 / 3}
   .rp-extra-cols{grid-template-columns:1fr}
 }
+
+/* ===== 48日报 · 体育报纸版式（2026-09-11 改版）=====
+   参照体育报纸的阅读习惯：报头双线 + 期号反白 / 栏目头用色块 / 正文与榜单左右分栏 /
+   积分榜大号名次 / 底部「人事动态」栏。只使用既有 token，不引入外部模板色。 */
+/* 报头布局与配色在下方 `.editorial-main .rp-masthead` 段定义（首页是唯一有日报的页面）；
+   这里只放期号徽标的默认样式与数据条/分栏等新栏目。 */
+.rp-edition{display:inline-flex; align-items:center; background:var(--ink); color:var(--card-bg);
+  font-size:11.5px; font-weight:900; letter-spacing:.1em; padding:3px 9px; border-radius:3px; margin-right:8px}
+.rp-databar{display:grid; grid-template-columns:repeat(auto-fit,minmax(94px,1fr)); border-bottom:1px solid var(--line); margin:0 0 14px}
+.rp-data{border-right:1px solid var(--line); padding:11px 12px 12px 0; min-width:0}
+.rp-data:last-child{border-right:0}
+.rp-data b{display:block; font-size:clamp(21px,2.5vw,29px); font-weight:900; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.rp-data b i{font-style:normal; font-size:.45em; font-weight:800; color:var(--muted); margin-left:3px}
+.rp-data span{display:block; margin-top:5px; font-size:11px; color:var(--muted); letter-spacing:.1em; font-weight:700}
+.rp-lead{grid-template-columns:minmax(0,1fr) minmax(210px,300px); gap:24px; margin:16px 0 0;
+  padding-bottom:16px; border-bottom:1px solid var(--line)}
+.rp-kicker{font-size:11.5px; letter-spacing:.14em; border-left:3px solid var(--accent); padding-left:8px; margin-bottom:9px}
+.rp-headline{font-size:clamp(23px,3.2vw,36px); font-weight:900; line-height:1.22; letter-spacing:-.015em; margin-bottom:10px}
+.rp-summary{font-size:14px; -webkit-line-clamp:4}
+.rp-sec{display:flex; align-items:baseline; gap:9px; font-size:14.5px; font-weight:900; letter-spacing:.06em;
+  border-bottom:2px solid var(--ink); padding:0 0 7px; margin:20px 0 12px}
+.rp-sec::before{content:""; width:9px; height:9px; background:var(--accent); transform:translateY(-2px)}
+.rp-sec em{font-style:normal; font-size:10px; font-weight:800; letter-spacing:.18em; color:var(--muted)}
+/* 主体两栏：左正文 / 右榜单。窄屏切单列时必须用 minmax(0,1fr)，
+   否则 1fr 的 min 是 min-content，会被长数字串撑破容器（实测 492 > 472）。 */
+.rp-body{display:grid; grid-template-columns:minmax(0,1.62fr) minmax(248px,.38fr); gap:0; min-width:0}
+.rp-main{min-width:0; padding-right:22px}
+.rp-aside{min-width:0; border-left:1px solid var(--line); padding-left:22px}
+.rp-board-row{display:grid; grid-template-columns:30px minmax(0,1fr); gap:9px; align-items:start;
+  padding:9px 0; border-bottom:1px dotted var(--line)}
+.rp-board-row:last-child{border-bottom:0}
+.rp-board-rank{font-size:22px; font-weight:900; line-height:1; color:var(--accent-deep); font-variant-numeric:tabular-nums}
+.rp-board-main{min-width:0}
+.rp-board-t{font-size:13.5px; font-weight:800; line-height:1.45}
+.rp-board-w{font-size:11.5px; color:var(--muted); line-height:1.55; margin-top:3px}
+.rp-move{display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr); gap:8px; align-items:baseline;
+  padding:8px 0; border-bottom:1px dotted var(--line); font-size:13px}
+.rp-move:last-child{border-bottom:0}
+.rp-move-k{font-size:11px; font-weight:900; letter-spacing:.06em; color:var(--card-bg); background:var(--accent-deep);
+  padding:2px 6px; border-radius:3px; white-space:nowrap}
+.rp-move-t{min-width:0; line-height:1.5}
+.rp-move-t b{font-weight:800}
+.rp-move-d{display:block; font-size:11px; color:var(--muted); margin-top:2px}
+@media(max-width:1100px){
+  .rp-body{grid-template-columns:minmax(0,1fr)}
+  .rp-main,.rp-aside{max-width:100%}
+  .rp-main{padding-right:0}
+  .rp-aside{border-left:0; border-top:1px solid var(--line); padding-left:0; padding-top:4px}
+}
+@media(max-width:767px){
+  .rp-masthead{grid-template-columns:1fr}
+  .rp-sub{text-align:left}
+  .rp-databar{grid-template-columns:1fr 1fr}
+  .rp-data:nth-child(2n){border-right:0}
+}
 footer{max-width:1120px; margin:0 auto; padding:8px 20px 44px; width:100%; color:var(--muted); font-size:12.5px}
 footer a{color:var(--muted)}
 .about p{font-size:14px; color:var(--ink)}
@@ -662,15 +718,47 @@ html[data-layout="mobile"] footer{width:100%; max-width:1120px; margin:0 auto; p
 .editorial-main .card:hover{transform:none; box-shadow:0 12px 28px rgba(18,7,11,.14)}
 .editorial-main .rp-masthead{border-bottom:1px solid var(--stone-700)}
 .editorial-main .rp-masthead{display:flex; align-items:end; justify-content:space-between; gap:18px; padding:16px 18px; color:#fff; background:linear-gradient(100deg,var(--rose-900),var(--rose-700) 58%,var(--coral)); border:0}
-.editorial-main .rp-title,.editorial-main .rp-title em,.editorial-main .rp-sub{color:#fff}
-.editorial-main .rp-sub{max-width:42ch; font-size:12px; line-height:1.55; opacity:.9; text-align:right}
+.editorial-main .rp-title,.editorial-main .rp-sub{color:#fff}
+.editorial-main .rp-sub{max-width:42ch; font-size:12px; line-height:1.55; opacity:.92; text-align:right}
 .editorial-main .rp-title{font-size:clamp(30px,4vw,48px)}
-.editorial-main .rp-title em{color:var(--rose-700)}
+/* 「48日报」原本用 rose-700，压在深红渐变报头上几乎不可读；改用浅粉保证对比度 */
+.editorial-main .rp-title em{color:var(--rose-200); font-size:.6em; letter-spacing:.06em}
+.editorial-main .rp-edition{background:rgba(0,0,0,.35); color:#fff; border:1px solid rgba(255,255,255,.35)}
 .editorial-main .rp-chip{border-radius:0}
 .editorial-main .rp-lead{grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr); gap:42px; padding:24px 0 36px}
 .editorial-main .rp-headline{font-size:clamp(26px,3.5vw,48px); line-height:1.15}
 .editorial-main .rp-figure img{border-radius:0; border:0}
 .editorial-main .rp-sec{font-size:11px; letter-spacing:.18em; text-transform:uppercase; border-left:0; border-bottom:2px solid var(--rose-900); padding:0 0 10px}
+/* 报纸正文靠文字密度与规则线分栏，不靠底色：条目不带背景；
+   头条图限高，避免一张竖图把正文挤出首屏；榜单标题最多两行。 */
+.editorial-main .rp-view-item,.editorial-main .rp-item,.editorial-main .rp-board-row,.editorial-main .rp-move{background:transparent}
+.editorial-main .rp-figure img{max-height:460px; object-fit:cover; object-position:top center}
+.editorial-main .rp-board-t{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.editorial-main .rp-board-t .jump-link,.editorial-main .rp-move-t .jump-link{text-align:left; font-size:13.5px; font-weight:800; line-height:1.45}
+/* 报纸版式有大量短列与长英文/数字串（SNH482026、话题标签、日期），
+   必须允许任意断行并放开网格项最小宽度，否则窄屏会被 min-content 撑破。 */
+.editorial-main .rp-main,.editorial-main .rp-aside{min-width:0; max-width:100%}
+.editorial-main .rp-t,.editorial-main .rp-view-t,.editorial-main .rp-board-t,
+.editorial-main .rp-move-t,.editorial-main .rp-m,.editorial-main .rp-view-m,
+.editorial-main .rp-board-w,.editorial-main .rp-move-d,.editorial-main .rp-summary,
+.editorial-main .rp-headline,.editorial-main .rp-sub{overflow-wrap:anywhere}
+.editorial-main .rp-item,.editorial-main .rp-item-with-image{grid-template-columns:44px minmax(0,auto) minmax(0,1fr)}
+/* 看点序号改为报纸式大号数字，去掉圆角色块 */
+.editorial-main .rp-view-item{grid-template-columns:30px minmax(0,1fr)}
+.editorial-main .rp-view-num{background:transparent; color:var(--rose-900); border-radius:0;
+  width:auto; height:auto; justify-content:flex-start; font-size:21px; font-weight:900; line-height:1.15; font-variant-numeric:tabular-nums}
+/* 窄屏：头条改单栏（否则 220px 图列会撑出横向滚动），数据条两列，头条图限高 */
+@media(max-width:900px){
+  .editorial-main .rp-lead{grid-template-columns:1fr; gap:18px}
+}
+@media(max-width:767px){
+  .editorial-main .rp-masthead{align-items:start; flex-direction:column; gap:8px}
+  .editorial-main .rp-sub{text-align:left; max-width:none}
+  .editorial-main .rp-figure img{max-height:300px}
+  .editorial-main .rp-data{padding:9px 10px 10px 0}
+  .editorial-main .rp-board-row{grid-template-columns:26px minmax(0,1fr); gap:7px}
+  .editorial-main .rp-board-rank{font-size:19px}
+}
 .editorial-main .rp-item{padding:15px 0; border-bottom:1px solid var(--stone-200)}
 .hero-proof{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr); gap:0; max-width:980px; margin-top:42px; border:1px solid rgba(255,255,255,.24); background:rgba(18,2,8,.42)}
 .hero-proof-main{padding:24px 26px}.hero-proof-side{padding:24px 26px; border-left:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06)}
@@ -898,7 +986,7 @@ html[data-skin="dark"] .intake-step span,html[data-skin="dark"] .acc-code,html[d
 
 <script>
 const PAGE_ID = "hot";
-const DATA = {"as_of": "2026-09-01", "as_of_cutoff": "2026-09-07", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 13, "member_events": 20, "feed_7d": 1, "feed_30d": 101}, "hot_topics": [{"rank": 1, "title": "2026 年度青春盛典", "tier": "P0", "item_count": 93, "channels": ["bilibili", "bilibili-bej", "bilibili-cgt", "bilibili-gnz", "media", "official", "tieba-hg", "weibo", "weibo-super"], "channel_count": 9, "has_top": true, "latest_at": "2026-09-01", "earliest_at": "2026-05-15", "days_since_latest": 8, "score": 5.1276, "hot_index": 100, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 6.5546, "coverage": 2.9449, "coverage_value": 5.7, "top": 1}, "why_hot": "置顶 + 9 源覆盖 + 93 条同事件 + 最新 8 天前", "item_ids": ["6509", "6508", "6507", "6506", "6504", "6502", "6501", "6496", "6495", "6491", "6490", "6505", "weibo:https://weibo.com/2689280541/Rg4agyQKM", "weibo:https://weibo.com/2689280541/Rg3LUhaJ1", "weibo:https://weibo.com/2689280541/RfZzFpjR2", "weibo:https://weibo.com/2689280541/RfXug0bHK", "weibo:https://weibo.com/2689280541/RfUJM0JLT", "bilibili:BV1qX8Q6XEsF", "media:050df8435a74a015", "media:9e829692a8292154", "media:4117254bf863a44e", "bilibili-bej:BV1PU8c6sE7L", "bilibili-bej:BV1sn8n65E7Q", "weibo-super:https://weibo.com/2689280541/Re5ds5vNj", "weibo-super:https://weibo.com/7777679564/Re3EqevWe", "bilibili-bej:BV1sw8g6mEyi", "bilibili-bej:BV13Eba6HEhA", "bilibili-bej:BV1tJbD6YEnF", "bilibili-bej:BV1jYby68EHj", "bilibili-bej:BV1sXgP6SEHF", "bilibili-bej:BV1Kagj6QEtk", "bilibili-bej:BV1BpgV6cEJU", "bilibili-bej:BV1bvuq6jEdF", "media:0da32613a96c9254", "media:73f49c52d16d9d84", "media:ea7a67665d229bb5", "bilibili:BV1aWuG6mE9Z", "bilibili:BV15euu65Ede", "bilibili:BV14Suu6AECL", "bilibili:BV1Mtug6TEqx", "bilibili:BV1uxug6BE1y", "media:6976314c9d97696d", "bilibili-bej:BV1vf3s6FEUW", "bilibili-cgt:BV1zb326FED6", "bilibili-cgt:BV1LK3E63Ew7", "bilibili-gnz:BV1kmgr6mEa5", "bilibili-gnz:BV1dvK16qEJo", "bilibili-cgt:BV1LP3E6kEW7", "bilibili-cgt:BV1YQ3E66END", "bilibili-cgt:BV1YQ3E66EBz", "bilibili-gnz:BV1LvK16BEec", "bilibili-bej:BV1Qh376NEzX", "bilibili-bej:BV1Ls376gEpW", "bilibili-bej:BV1uega6iE86", "bilibili-cgt:BV1psgh6XEJa", "bilibili-bej:BV1JmgD6zEuR", "bilibili-cgt:BV14DgS6mE12", "bilibili-bej:BV1Xmgk6iEFG", "bilibili-cgt:BV1Yngz6bEWR", "bilibili-cgt:BV1QvKC6fEkH", "bilibili-gnz:BV1JDK26jEwU", "bilibili-cgt:BV1DqKC6tEoC", "bilibili-gnz:BV1jRK26CEVF", "bilibili-cgt:BV1XvKC6fEFK", "bilibili-bej:BV1wXKr66EWH", "bilibili-bej:BV1hTKP61EAj", "bilibili-gnz:BV1feMt6wEnA", "bilibili-cgt:BV13rKw6yE1H", "bilibili-bej:BV1fvNR6vEGF", "bilibili-cgt:BV1uHKH6FEXC", "bilibili-bej:BV1aGKJ6tEJA", "bilibili-cgt:BV1vMKg6uEfH", "bilibili-cgt:BV1CDNv6XEAa", "media:b88db5ddd5309b3b", "bilibili-cgt:BV1qHN26GECy", "bilibili-cgt:BV1G8Ny6FEg6", "bilibili-gnz:BV19yNC6fEox", "bilibili-gnz:BV1RyNC6fEkQ", "bilibili-cgt:BV16TNM6MEEb", "bilibili-cgt:BV1StNM69E8S", "bilibili-gnz:BV1mBM76UEFD", "bilibili-gnz:BV1hkNj6jEUw", "bilibili-cgt:BV1DWN76EEqb", "bilibili-cgt:BV1SGME6xEwu", "bilibili-cgt:BV1WUMh6JE7C", "bilibili-cgt:BV1CUMh6JEWv", "media:957e4f53c126f9e9", "media:68dd8c866096ffd6", "bilibili-cgt:BV11eE16HEMx", "bilibili-cgt:BV1mhE16sEuo", "tieba-hg:https://tieba.baidu.com/p/10748796310", "media:800e653e685199fc", "media:8db2c5ceec447a5a"], "urls": ["https://www.snh48.com/html/bej/allnews/zixun/202608/6509.html", "https://www.snh48.com/html/cgt/allnews/zixun/202608/6508.html", "https://www.snh48.com/html/ckg/allnews/zixun/202608/6507.html"], "anchor_id": "hot-1", "bodies": [{"title": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单公布（CGT48成员）", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，感谢各位粉丝朋友们对本届年度青春盛典的支持！ 2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CGT48成员）:", "body": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，感谢各位粉丝朋友们对本届年度青春盛典的支持！\r\n\r\n2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CGT48成员）:"}, {"title": "“梦想、汗水、坚持”2026 SNH48 GROUP第十三届年度青春盛典CKG48作品伯乐名单公布", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉。感谢各位粉丝朋友们对本届年度青春盛典的支持", "body": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉！感谢各位粉丝朋友们对本届年度青春盛典的支持！\n2026 SNH48 GROUP第十三届年度青春盛典最终人气奖项作品的伯乐名单如下：\n除上述作品外，其余2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CKG48成员）："}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下 （GNZ48成员）", "summary": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（GNZ48成员）：", "body": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（GNZ48成员）："}, {"title": "SNH48 GROUP第十三届青春盛典落幕  CGT48逆风坚守砥砺前行", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48 GROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，当《万圣节之夜》《公主披风》《那不勒斯的黎明》《魔女的诗篇》等一首首承载着无数回忆的旋律响起，全场观众仿佛翻开了一本厚厚的回忆相册，每一页都是少女们之前的情谊、羁绊与记录。随着《时间的歌》《别来无恙》《花戎》《丝路》《Number One》《最好的朋友》逐一登场，现场的粉丝朋友们也随着旋律，与成员们共同走进这专属的回忆之中。\n其中，《公主披"}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典燃动盛夏 共见SNH48杨冰怡登顶加冕", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48\r\nGROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，当《万圣节之夜》《公主披风》《那不勒斯的黎明》《魔女的诗篇》等一首首承载着无数回忆的旋律响起，全场观众仿佛翻开了一本厚厚的回忆相册，每一页都是少女们之前的情谊、羁绊与记录。随着《时间的歌》《别来无恙》《花戎》《丝路》《Number One》《最好的朋友》逐一登场，现场的粉丝朋友们也随着旋律，与成员们共同走进这专属的回忆之中。\n飒、魅、甜全"}, {"title": "“梦想、汗水、坚持”2026 SNH48 GROUP第十三届年度青春盛典最终人气作品伯乐名单公布", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉。感谢各位粉丝朋友们对本届年度青春盛典的支持", "body": "“梦想、汗水、坚持”， 2026\r\nSNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉！感谢各位粉丝朋友们对本届年度青春盛典的支持！\n2026 SNH48\r\nGROUP第十三届年度青春盛典最终人气奖项作品的伯乐名单如下：\n除上述作品外，其余2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（SNH48成员）："}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典燃动盛夏， CKG48强势崛起，新人葛俊言斩获川渝第一！", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48 GROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，其中，由CKG48呈现的《万圣节之夜》，推开通往幻境的夜色之门，鼓点随心跳共振，跟随节奏点燃舞台，热烈与俏皮在此刻尽数绽放。\n五团接力经典燃曲炸场\n五地姐妹团以经典燃曲展开接力。SNH48全员带来《新航路》，GNZ48与CGT48携手献唱《光之轨迹》，BEJ48与CKG48共同唱响《晨光》。三首燃曲轮番炸场，每一首都见证了五团各自的精神与力"}]}, {"rank": 2, "title": "CKG48成员直言盼重组,称想干倒闭", "tier": "P1", "item_count": 1, "channels": ["media"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-07", "earliest_at": "2026-09-07", "days_since_latest": 2, "score": 2.0498, "hot_index": 50, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.9333, "aggregation": 1.0, "coverage": 1.433, "coverage_value": 0.7, "top": 0}, "why_hot": "最新 2 天前", "item_ids": ["media:5951c98f7e9a36b6"], "urls": ["http://k.sina.com.cn/article_5512350098_m1488fc992033029r6q.html"], "anchor_id": "hot-2", "bodies": []}, {"rank": 3, "title": "十三年后,丝芭传媒SNH48再从嘉兴路出发", "tier": "P1", "item_count": 1, "channels": ["media"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-03", "earliest_at": "2026-09-03", "days_since_latest": 6, "score": 1.9165, "hot_index": 47, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.8, "aggregation": 1.0, "coverage": 1.433, "coverage_value": 0.7, "top": 0}, "why_hot": "最新 6 天前", "item_ids": ["media:7ad2631beb6eeeb1"], "urls": ["https://www.360kuai.com/pc/922454e3b14c613a7?cota=3&kuai_so=1&refer_scene=so_3&sign=360_da20e874"], "anchor_id": "hot-3", "bodies": []}, {"rank": 4, "title": "SNH48#SNH48乐曜曲计划# 2026「乐曜曲计划」精彩延续——【8月乐曜曲】归属揭晓⬇——恭贺SNH48 GR…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-01", "earliest_at": "2026-09-01", "days_since_latest": 8, "score": 1.8888, "hot_index": 46, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 8 天前", "item_ids": ["weibo:https://weibo.com/2689280541/Rg4vLFxCF"], "urls": ["https://weibo.com/2689280541/Rg4vLFxCF"], "anchor_id": "hot-4", "bodies": []}, {"rank": 5, "title": "SNH48#SNH48星梦剧院MVP# SNH48星梦剧院2026年8月MVP揭晓！【月度之星】荣耀加冕时刻恭喜——T…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-01", "earliest_at": "2026-09-01", "days_since_latest": 8, "score": 1.8888, "hot_index": 46, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 8 天前", "item_ids": ["weibo:https://weibo.com/2689280541/Rg4kcDL5z"], "urls": ["https://weibo.com/2689280541/Rg4kcDL5z"], "anchor_id": "hot-5", "bodies": []}, {"rank": 6, "title": "SNH48 SNH48星梦剧院9/10-9/13演出票务每周二17:00竞价开启>>网页链接20:00演出门票开售>>…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfVUPgy0R"], "urls": ["https://weibo.com/2689280541/RfVUPgy0R"], "anchor_id": "hot-6", "bodies": []}, {"rank": 7, "title": "SNH48 开启忙碌九月，行程图请注意查收~*如有变动，另行通知，请关注官方平台", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfVUPgxc3"], "urls": ["https://weibo.com/2689280541/RfVUPgxc3"], "anchor_id": "hot-7", "bodies": []}, {"rank": 8, "title": "「SNH48 “痴迷（cherry crush）”年度MVP全场定制公演返图」高冷魅惑、狂野霸气、神秘莫测、锐利决绝、…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfUKItRby"], "urls": ["https://weibo.com/2689280541/RfUKItRby"], "anchor_id": "hot-8", "bodies": []}, {"rank": 9, "title": "【SNH48】TEAM NII《肆时墟》公演20260830", "tier": "P1", "item_count": 1, "channels": ["bilibili"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-30", "earliest_at": "2026-08-30", "days_since_latest": 10, "score": 1.8094, "hot_index": 44, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.6667, "aggregation": 1.0, "coverage": 1.4854, "coverage_value": 0.8, "top": 0}, "why_hot": "最新 10 天前", "item_ids": ["bilibili:BV1QYtn6EEFw"], "urls": ["https://www.bilibili.com/video/BV1QYtn6EEFw"], "anchor_id": "hot-9", "bodies": []}, {"rank": 10, "title": "【SNH48】TEAM HII《赫兹共振》公演 20260830", "tier": "P1", "item_count": 1, "channels": ["bilibili"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-30", "earliest_at": "2026-08-30", "days_since_latest": 10, "score": 1.8094, "hot_index": 44, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.6667, "aggregation": 1.0, "coverage": 1.4854, "coverage_value": 0.8, "top": 0}, "why_hot": "最新 10 天前", "item_ids": ["bilibili:BV1zW4X6DE5p"], "urls": ["https://www.bilibili.com/video/BV1zW4X6DE5p"], "anchor_id": "hot-10", "bodies": []}]};
+const DATA = {"as_of": "2026-09-11", "as_of_cutoff": "2026-09-07", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 13, "member_events": 20, "feed_7d": 1, "feed_30d": 101}, "hot_topics": [{"rank": 1, "title": "2026 年度青春盛典", "tier": "P0", "item_count": 93, "channels": ["bilibili", "bilibili-bej", "bilibili-cgt", "bilibili-gnz", "media", "official", "tieba-hg", "weibo", "weibo-super"], "channel_count": 9, "has_top": true, "latest_at": "2026-09-01", "earliest_at": "2026-05-15", "days_since_latest": 8, "score": 5.1276, "hot_index": 100, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 6.5546, "coverage": 2.9449, "coverage_value": 5.7, "top": 1}, "why_hot": "置顶 + 9 源覆盖 + 93 条同事件 + 最新 8 天前", "item_ids": ["6509", "6508", "6507", "6506", "6504", "6502", "6501", "6496", "6495", "6491", "6490", "6505", "weibo:https://weibo.com/2689280541/Rg4agyQKM", "weibo:https://weibo.com/2689280541/Rg3LUhaJ1", "weibo:https://weibo.com/2689280541/RfZzFpjR2", "weibo:https://weibo.com/2689280541/RfXug0bHK", "weibo:https://weibo.com/2689280541/RfUJM0JLT", "bilibili:BV1qX8Q6XEsF", "media:050df8435a74a015", "media:9e829692a8292154", "media:4117254bf863a44e", "bilibili-bej:BV1PU8c6sE7L", "bilibili-bej:BV1sn8n65E7Q", "weibo-super:https://weibo.com/2689280541/Re5ds5vNj", "weibo-super:https://weibo.com/7777679564/Re3EqevWe", "bilibili-bej:BV1sw8g6mEyi", "bilibili-bej:BV13Eba6HEhA", "bilibili-bej:BV1tJbD6YEnF", "bilibili-bej:BV1jYby68EHj", "bilibili-bej:BV1sXgP6SEHF", "bilibili-bej:BV1Kagj6QEtk", "bilibili-bej:BV1BpgV6cEJU", "bilibili-bej:BV1bvuq6jEdF", "media:0da32613a96c9254", "media:73f49c52d16d9d84", "media:ea7a67665d229bb5", "bilibili:BV1aWuG6mE9Z", "bilibili:BV15euu65Ede", "bilibili:BV14Suu6AECL", "bilibili:BV1Mtug6TEqx", "bilibili:BV1uxug6BE1y", "media:6976314c9d97696d", "bilibili-bej:BV1vf3s6FEUW", "bilibili-cgt:BV1zb326FED6", "bilibili-cgt:BV1LK3E63Ew7", "bilibili-gnz:BV1kmgr6mEa5", "bilibili-gnz:BV1dvK16qEJo", "bilibili-cgt:BV1LP3E6kEW7", "bilibili-cgt:BV1YQ3E66END", "bilibili-cgt:BV1YQ3E66EBz", "bilibili-gnz:BV1LvK16BEec", "bilibili-bej:BV1Qh376NEzX", "bilibili-bej:BV1Ls376gEpW", "bilibili-bej:BV1uega6iE86", "bilibili-cgt:BV1psgh6XEJa", "bilibili-bej:BV1JmgD6zEuR", "bilibili-cgt:BV14DgS6mE12", "bilibili-bej:BV1Xmgk6iEFG", "bilibili-cgt:BV1Yngz6bEWR", "bilibili-cgt:BV1QvKC6fEkH", "bilibili-gnz:BV1JDK26jEwU", "bilibili-cgt:BV1DqKC6tEoC", "bilibili-gnz:BV1jRK26CEVF", "bilibili-cgt:BV1XvKC6fEFK", "bilibili-bej:BV1wXKr66EWH", "bilibili-bej:BV1hTKP61EAj", "bilibili-gnz:BV1feMt6wEnA", "bilibili-cgt:BV13rKw6yE1H", "bilibili-bej:BV1fvNR6vEGF", "bilibili-cgt:BV1uHKH6FEXC", "bilibili-bej:BV1aGKJ6tEJA", "bilibili-cgt:BV1vMKg6uEfH", "bilibili-cgt:BV1CDNv6XEAa", "media:b88db5ddd5309b3b", "bilibili-cgt:BV1qHN26GECy", "bilibili-cgt:BV1G8Ny6FEg6", "bilibili-gnz:BV19yNC6fEox", "bilibili-gnz:BV1RyNC6fEkQ", "bilibili-cgt:BV16TNM6MEEb", "bilibili-cgt:BV1StNM69E8S", "bilibili-gnz:BV1mBM76UEFD", "bilibili-gnz:BV1hkNj6jEUw", "bilibili-cgt:BV1DWN76EEqb", "bilibili-cgt:BV1SGME6xEwu", "bilibili-cgt:BV1WUMh6JE7C", "bilibili-cgt:BV1CUMh6JEWv", "media:957e4f53c126f9e9", "media:68dd8c866096ffd6", "bilibili-cgt:BV11eE16HEMx", "bilibili-cgt:BV1mhE16sEuo", "tieba-hg:https://tieba.baidu.com/p/10748796310", "media:800e653e685199fc", "media:8db2c5ceec447a5a"], "urls": ["https://www.snh48.com/html/bej/allnews/zixun/202608/6509.html", "https://www.snh48.com/html/cgt/allnews/zixun/202608/6508.html", "https://www.snh48.com/html/ckg/allnews/zixun/202608/6507.html"], "anchor_id": "hot-1", "bodies": [{"title": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单公布（CGT48成员）", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，感谢各位粉丝朋友们对本届年度青春盛典的支持！ 2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CGT48成员）:", "body": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，感谢各位粉丝朋友们对本届年度青春盛典的支持！\r\n\r\n2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CGT48成员）:"}, {"title": "“梦想、汗水、坚持”2026 SNH48 GROUP第十三届年度青春盛典CKG48作品伯乐名单公布", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉。感谢各位粉丝朋友们对本届年度青春盛典的支持", "body": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉！感谢各位粉丝朋友们对本届年度青春盛典的支持！\n2026 SNH48 GROUP第十三届年度青春盛典最终人气奖项作品的伯乐名单如下：\n除上述作品外，其余2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（CKG48成员）："}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下 （GNZ48成员）", "summary": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（GNZ48成员）：", "body": "2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（GNZ48成员）："}, {"title": "SNH48 GROUP第十三届青春盛典落幕  CGT48逆风坚守砥砺前行", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48 GROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，当《万圣节之夜》《公主披风》《那不勒斯的黎明》《魔女的诗篇》等一首首承载着无数回忆的旋律响起，全场观众仿佛翻开了一本厚厚的回忆相册，每一页都是少女们之前的情谊、羁绊与记录。随着《时间的歌》《别来无恙》《花戎》《丝路》《Number One》《最好的朋友》逐一登场，现场的粉丝朋友们也随着旋律，与成员们共同走进这专属的回忆之中。\n其中，《公主披"}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典燃动盛夏 共见SNH48杨冰怡登顶加冕", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48\r\nGROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，当《万圣节之夜》《公主披风》《那不勒斯的黎明》《魔女的诗篇》等一首首承载着无数回忆的旋律响起，全场观众仿佛翻开了一本厚厚的回忆相册，每一页都是少女们之前的情谊、羁绊与记录。随着《时间的歌》《别来无恙》《花戎》《丝路》《Number One》《最好的朋友》逐一登场，现场的粉丝朋友们也随着旋律，与成员们共同走进这专属的回忆之中。\n飒、魅、甜全"}, {"title": "“梦想、汗水、坚持”2026 SNH48 GROUP第十三届年度青春盛典最终人气作品伯乐名单公布", "summary": "“梦想、汗水、坚持”， 2026 SNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉。感谢各位粉丝朋友们对本届年度青春盛典的支持", "body": "“梦想、汗水、坚持”， 2026\r\nSNH48 GROUP第十三届年度青春盛典圆满落幕，年度人气类别作品奖项的最终归属一一揭晓，48首获奖作品的伯乐名单也新鲜出炉！感谢各位粉丝朋友们对本届年度青春盛典的支持！\n2026 SNH48\r\nGROUP第十三届年度青春盛典最终人气奖项作品的伯乐名单如下：\n除上述作品外，其余2026 SNH48 GROUP第十三届年度青春盛典作品的伯乐名单如下（SNH48成员）："}, {"title": "2026 SNH48 GROUP第十三届年度青春盛典燃动盛夏， CKG48强势崛起，新人葛俊言斩获川渝第一！", "summary": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行", "body": "十三而砺，向新而行。8月8日晚，2026 SNH48 GROUP第十三届年度青春盛典在苏州奥林匹克体育中心体育馆盛大举行。来自SNH48（上海）、GNZ48（广州）、BEJ48（北京）、CKG48（重庆）、CGT48（成都）五团200多位成员齐聚一堂，以“梦想、汗水、坚持”之名，在这个盛夏之夜，交出了一封写给这十三年的感动情书。SNH48杨冰怡最终登顶加冕，收获了她在团的第二个“TOP1”的荣誉，也开启了属于她的全新篇章。\n十二年经典曲目连唱 青春盛典上演“河式”回忆杀\n上半场的汇报演出以“星河回溯，时钟倒流”为主题线索，从2014年的《UZA》到2025年的《终极殿堂》，SNH48 GROUP五团成员们以全新的阵容，演绎了过往12年的经典汇报单曲，其中，由CKG48呈现的《万圣节之夜》，推开通往幻境的夜色之门，鼓点随心跳共振，跟随节奏点燃舞台，热烈与俏皮在此刻尽数绽放。\n五团接力经典燃曲炸场\n五地姐妹团以经典燃曲展开接力。SNH48全员带来《新航路》，GNZ48与CGT48携手献唱《光之轨迹》，BEJ48与CKG48共同唱响《晨光》。三首燃曲轮番炸场，每一首都见证了五团各自的精神与力"}]}, {"rank": 2, "title": "CKG48成员直言盼重组,称想干倒闭", "tier": "P1", "item_count": 1, "channels": ["media"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-07", "earliest_at": "2026-09-07", "days_since_latest": 2, "score": 2.0498, "hot_index": 50, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.9333, "aggregation": 1.0, "coverage": 1.433, "coverage_value": 0.7, "top": 0}, "why_hot": "最新 2 天前", "item_ids": ["media:5951c98f7e9a36b6"], "urls": ["http://k.sina.com.cn/article_5512350098_m1488fc992033029r6q.html"], "anchor_id": "hot-2", "bodies": []}, {"rank": 3, "title": "十三年后,丝芭传媒SNH48再从嘉兴路出发", "tier": "P1", "item_count": 1, "channels": ["media"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-03", "earliest_at": "2026-09-03", "days_since_latest": 6, "score": 1.9165, "hot_index": 47, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.8, "aggregation": 1.0, "coverage": 1.433, "coverage_value": 0.7, "top": 0}, "why_hot": "最新 6 天前", "item_ids": ["media:7ad2631beb6eeeb1"], "urls": ["https://www.360kuai.com/pc/922454e3b14c613a7?cota=3&kuai_so=1&refer_scene=so_3&sign=360_da20e874"], "anchor_id": "hot-3", "bodies": []}, {"rank": 4, "title": "SNH48#SNH48乐曜曲计划# 2026「乐曜曲计划」精彩延续——【8月乐曜曲】归属揭晓⬇——恭贺SNH48 GR…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-01", "earliest_at": "2026-09-01", "days_since_latest": 8, "score": 1.8888, "hot_index": 46, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 8 天前", "item_ids": ["weibo:https://weibo.com/2689280541/Rg4vLFxCF"], "urls": ["https://weibo.com/2689280541/Rg4vLFxCF"], "anchor_id": "hot-4", "bodies": []}, {"rank": 5, "title": "SNH48#SNH48星梦剧院MVP# SNH48星梦剧院2026年8月MVP揭晓！【月度之星】荣耀加冕时刻恭喜——T…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-09-01", "earliest_at": "2026-09-01", "days_since_latest": 8, "score": 1.8888, "hot_index": 46, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7333, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 8 天前", "item_ids": ["weibo:https://weibo.com/2689280541/Rg4kcDL5z"], "urls": ["https://weibo.com/2689280541/Rg4kcDL5z"], "anchor_id": "hot-5", "bodies": []}, {"rank": 6, "title": "SNH48 SNH48星梦剧院9/10-9/13演出票务每周二17:00竞价开启>>网页链接20:00演出门票开售>>…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfVUPgy0R"], "urls": ["https://weibo.com/2689280541/RfVUPgy0R"], "anchor_id": "hot-6", "bodies": []}, {"rank": 7, "title": "SNH48 开启忙碌九月，行程图请注意查收~*如有变动，另行通知，请关注官方平台", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfVUPgxc3"], "urls": ["https://weibo.com/2689280541/RfVUPgxc3"], "anchor_id": "hot-7", "bodies": []}, {"rank": 8, "title": "「SNH48 “痴迷（cherry crush）”年度MVP全场定制公演返图」高冷魅惑、狂野霸气、神秘莫测、锐利决绝、…", "tier": "P1", "item_count": 1, "channels": ["weibo"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-31", "earliest_at": "2026-08-31", "days_since_latest": 9, "score": 1.8555, "hot_index": 45, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.7, "aggregation": 1.0, "coverage": 1.511, "coverage_value": 0.85, "top": 0}, "why_hot": "最新 9 天前", "item_ids": ["weibo:https://weibo.com/2689280541/RfUKItRby"], "urls": ["https://weibo.com/2689280541/RfUKItRby"], "anchor_id": "hot-8", "bodies": []}, {"rank": 9, "title": "【SNH48】TEAM NII《肆时墟》公演20260830", "tier": "P1", "item_count": 1, "channels": ["bilibili"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-30", "earliest_at": "2026-08-30", "days_since_latest": 10, "score": 1.8094, "hot_index": 44, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.6667, "aggregation": 1.0, "coverage": 1.4854, "coverage_value": 0.8, "top": 0}, "why_hot": "最新 10 天前", "item_ids": ["bilibili:BV1QYtn6EEFw"], "urls": ["https://www.bilibili.com/video/BV1QYtn6EEFw"], "anchor_id": "hot-9", "bodies": []}, {"rank": 10, "title": "【SNH48】TEAM HII《赫兹共振》公演 20260830", "tier": "P1", "item_count": 1, "channels": ["bilibili"], "channel_count": 1, "has_top": false, "latest_at": "2026-08-30", "earliest_at": "2026-08-30", "days_since_latest": 10, "score": 1.8094, "hot_index": 44, "trend": "flat", "trend_delta": 0, "signals": {"recency": 0.6667, "aggregation": 1.0, "coverage": 1.4854, "coverage_value": 0.8, "top": 0}, "why_hot": "最新 10 天前", "item_ids": ["bilibili:BV1zW4X6DE5p"], "urls": ["https://www.bilibili.com/video/BV1zW4X6DE5p"], "anchor_id": "hot-10", "bodies": []}]};
 const ARCHIVE = DATA.community_archive || {};
 
 /* 皮肤：浅色 / 薄荷 / 深色，三态循环，localStorage 持久化 */
@@ -1427,6 +1515,8 @@ function renderBrief(selectedDate = ''){
     const s = String(t || '');
     return s.length >= 16 ? s.slice(11, 16) : '';
   };
+  const n24 = (b.counts && b.counts.last_24h) || 0;
+  const nwin = (b.counts && b.counts.window) || 0;
   const fmtCount = n => {
     const v = n == null ? 0 : n;
     return v > 0 ? `${v} 条` : '暂无';
@@ -1452,8 +1542,15 @@ function renderBrief(selectedDate = ''){
   }
   h += `<div class="report"><header class="rp-masthead">`+
     `<div class="rp-title">48HOT<em> · 48日报</em></div>`+
-    `<div class="rp-sub">${esc(viewDate)} · ${weekdayCN(viewDate)} · 每日 09:00 更新一期 · ${esc(b.honest_line || '')}</div>`+
+    `<div class="rp-sub">${b.edition ? `<span class="rp-edition">第 ${esc(String(b.edition))} 期</span>` : ''}${esc(viewDate)} · ${weekdayCN(viewDate)} · 每日 09:00 更新一期<br>${esc((b.honest_line || '').split('（')[0])}</div>`+
     `</header>`;
+  h += `<div class="rp-databar">`+
+    `<div class="rp-data"><b>${n24}</b><span>24 小时新讯</span></div>`+
+    `<div class="rp-data"><b>${nwin}</b><span>近 ${esc(String(b.window_days || 7))} 天窗口</span></div>`+
+    `<div class="rp-data"><b>${(b.source_tags || []).length}</b><span>来源覆盖</span></div>`+
+    `<div class="rp-data"><b>${(b.hot_topics || []).length}</b><span>热点主题</span></div>`+
+    `<div class="rp-data"><b>${(b.event_updates || []).length}</b><span>追踪事件</span></div>`+
+    `</div>`;
   if(arc.length > 1){
     h += `<nav class="rp-dates"><span class="rp-dates-label">往期</span>${arc.slice(0, 30).map(p => pickBtn(p.brief_date)).join('')}</nav>`;
   }
@@ -1470,8 +1567,9 @@ function renderBrief(selectedDate = ''){
     }
     h += `</div>`;
   }
+  h += `<div class="rp-body"><div class="rp-main">`;
   if(viewpoints.length){
-    h += `<section class="rp-view"><div class="rp-sec">今日看点</div><ol class="rp-view-list">`;
+    h += `<section class="rp-view"><div class="rp-sec">今日看点<em>HIGHLIGHTS</em></div><ol class="rp-view-list">`;
     viewpoints.forEach((x, i) => {
       h += `<li class="rp-view-item"><span class="rp-view-num">${i + 1}</span>`+
         `<span class="rp-view-main"><span class="ch ${esc(x.channel)}">${esc(CH_NAME[x.channel] || x.channel)}</span>`+
@@ -1480,7 +1578,7 @@ function renderBrief(selectedDate = ''){
     });
     h += `</ol></section>`;
   }
-  h += `<section class="rp-tl"><div class="rp-sec">今日时间线</div>`;
+  h += `<section class="rp-tl"><div class="rp-sec">今日时间线<em>TIMELINE</em></div>`;
   if(!timeline.length){
     h += `<div class="empty">本窗口暂无新讯</div>`;
   }else{
@@ -1492,11 +1590,9 @@ function renderBrief(selectedDate = ''){
       if(!visibleItems.length) return;
       h += `<div class="rp-day"><div class="rp-day-head"><span class="rp-day-date">${esc(g.date)}</span><span class="rp-day-n">${g.items.length} 条</span></div>`;
       visibleItems.forEach(x => {
-        const media = x.image_url ? `<img class="rp-thumb" src="${esc(x.image_url)}" alt="${esc(x.image_alt || x.title)}" loading="lazy">` : '';
-        h += `<div class="rp-item${x.image_url ? ' rp-item-with-image' : ''}"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
+        h += `<div class="rp-item"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
           `<span class="ch ${esc(x.channel)}">${esc(CH_NAME[x.channel] || x.channel)}</span>`+
           `<span class="rp-t"><a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.title)}">${esc(compactTitle(x.title))}</a></span>`+
-          `${media}`+
           `<span class="rp-m">${esc(x.summary || '')}</span></div>`;
       });
       timelineShown += visibleItems.length;
@@ -1504,19 +1600,37 @@ function renderBrief(selectedDate = ''){
     });
     if(timelineTotal > timelineLimit) h += `<p class="rp-foot">已展示 ${timelineLimit} 条正式来源动态；其余 ${timelineTotal - timelineLimit} 条可在「现场」频道继续阅读。</p>`;
   }
-  h += `</section>`;
-  h += `<section class="rp-extra"><div class="rp-sec">事件进展</div><div class="rp-extra-cols">`;
-  (b.event_updates || []).slice(0, 6).forEach(e => {
-    h += `<div class="rp-extra-item"><span class="rp-extra-t">${jump(e.event, 'stories', storyAnchor(e))}</span><span class="rp-extra-m">${esc(e.latest)}</span></div>`;
-  });
-  h += `</div></section>`;
-  h += `<section class="rp-extra"><div class="rp-sec">今日热点</div><div class="rp-extra-cols">`;
-  (b.hot_topics || []).slice(0, 5).forEach(t => {
-    h += `<div class="rp-extra-item"><span class="rp-rank">${t.rank}</span><span class="rp-extra-t">${jump(t.title, 'hot', hotAnchor(t))}</span><span class="rp-extra-m">${esc(t.why_hot)}</span></div>`;
-  });
-  h += `</div></section>`;
+  h += `</section></div><div class="rp-aside">`;
+  if((b.hot_topics || []).length){
+    h += `<section><div class="rp-sec">热点榜<em>STANDINGS</em></div>`;
+    (b.hot_topics || []).slice(0, 6).forEach(t => {
+      h += `<div class="rp-board-row"><span class="rp-board-rank">${t.rank}</span>`+
+        `<span class="rp-board-main"><span class="rp-board-t">${jump(compactTitle(t.title, 46), 'hot', hotAnchor(t))}</span>`+
+        `<span class="rp-board-w">${esc(t.why_hot)}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  if((b.event_updates || []).length){
+    h += `<section><div class="rp-sec">事件进展<em>TRACKER</em></div>`;
+    (b.event_updates || []).slice(0, 5).forEach(e => {
+      h += `<div class="rp-move"><span class="rp-move-k">${e.item_count} 条</span>`+
+        `<span class="rp-move-t">${jump(e.event, 'stories', storyAnchor(e))}`+
+        `<span class="rp-move-d">${esc(e.latest)}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  if((b.member_moves || []).length){
+    h += `<section><div class="rp-sec">人事动态<em>MOVES</em></div>`;
+    (b.member_moves || []).forEach(m => {
+      h += `<div class="rp-move"><span class="rp-move-k">${esc(m.type || '动态')}</span>`+
+        `<span class="rp-move-t"><b>${esc(m.member)}</b>`+
+        `<span class="rp-move-d">${esc(m.latest_at || '')}${m.item_count ? ' · ' + m.item_count + ' 条来源' : ''}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
+  h += `</div></div>`;
   h += `<div class="brief-cta"><button class="jump-link cta-btn" data-section="feed">查看全部动态 →</button><button class="jump-link cta-btn" data-section="hot">完整热点榜 →</button></div>`;
-  h += `<p class="rp-foot">48日报 · 每日 09:00 由「采集 → 策展 → 热点 → 事件 → 简报」流水线生成一期，非实时刷新；可用上方日期切换往期正文。</p>`;
+  h += `<p class="rp-foot">48日报 · 每日 09:00 由「采集 → 策展 → 热点 → 事件 → 简报」流水线生成一期，非实时刷新；可用上方日期切换往期正文。${esc(b.honest_line || '') ? ' · ' + esc(b.honest_line) : ''}</p>`;
   h += `</div>`;
   el.innerHTML = h;
   bindJumps(el);
