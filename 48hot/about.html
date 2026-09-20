@@ -509,6 +509,8 @@ section .hint{color:var(--muted); font-size:13.5px; margin:0 0 22px; max-width:6
 .rp-body{display:grid; grid-template-columns:minmax(0,1.62fr) minmax(248px,.38fr); gap:0; min-width:0}
 .rp-main{min-width:0; padding-right:16px}
 .rp-aside{min-width:0; border-left:1px solid var(--line); padding-left:16px}
+/* 时间线的「补高余量」：渲染后按实测的两栏高度差决定放出或回收 */
+.rp-extra{display:none}
 .rp-board-row{display:grid; grid-template-columns:22px minmax(0,1fr); gap:7px; align-items:start;
   padding:4px 0; border-bottom:1px dotted var(--line)}
 .rp-board-row:last-child{border-bottom:0}
@@ -541,6 +543,9 @@ footer a{color:var(--muted)}
 .site-health{display:flex; flex-wrap:wrap; gap:5px 14px; margin-bottom:7px; font-variant-numeric:tabular-nums}
 .site-health span{white-space:nowrap}
 .site-health .degraded{color:var(--amber)}
+.bsz-row{display:flex; flex-wrap:wrap; gap:5px 14px; margin-top:6px; font-variant-numeric:tabular-nums}
+.bsz{white-space:nowrap}
+.bsz b{font-weight:800; color:var(--ink)}
 .about p{font-size:14px; color:var(--ink)}
 .about table{border-collapse:collapse; width:100%; font-size:13px; margin-top:8px}
 .about th,.about td{border:1px solid var(--line); padding:7px 10px; text-align:left}
@@ -575,6 +580,41 @@ details.fold[open] summary{margin-bottom:4px; border-bottom:1px solid var(--line
 .pick-card:hover{transform:translateY(-2px); border-color:var(--accent); box-shadow:var(--card-shadow)}
 .pick-title{font-weight:700; font-size:15px; color:var(--ink)}
 .pick-why{font-size:12.5px; color:var(--muted); line-height:1.5}
+/* 应援日历（生日档案） */
+.cal-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:10px; margin:14px 0 6px}
+.cal-stat{border:1px solid var(--line); border-radius:var(--card-radius); background:var(--card-bg); padding:12px 14px}
+.cal-stat b{display:block; font-size:20px; letter-spacing:-.02em; line-height:1.35}
+.cal-stat span{font-size:12px; color:var(--muted)}
+.cal-today{border:1px solid var(--accent); background:var(--accent-soft); border-radius:var(--card-radius); padding:14px 16px; margin:14px 0 6px}
+.cal-today strong{font-size:15px}
+.cal-today p{margin:6px 0 0; font-size:13.5px; line-height:1.75}
+.cal-days{display:flex; flex-direction:column; gap:6px; margin:10px 0 4px}
+.cal-day{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; padding:8px 13px; border:1px solid var(--line); border-radius:var(--card-radius); background:var(--card-bg); font-size:12.5px; color:var(--muted)}
+.cal-day b{font-size:13.5px; color:var(--ink); font-variant-numeric:tabular-nums}
+.cal-when{color:var(--accent); font-weight:700; white-space:nowrap}
+.cal-names{line-height:1.75}
+.cal-month{border:1px solid var(--line); border-radius:var(--card-radius); background:var(--card-bg); margin-bottom:8px; padding:0 14px}
+.cal-month summary{display:flex; align-items:baseline; gap:10px; padding:13px 2px; cursor:pointer; font-weight:800; font-size:14.5px}
+.cal-month-count{font-weight:400; font-size:12.5px; color:var(--muted)}
+.cal-month .pick-grid{padding-bottom:14px}
+.cal-bars{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px}
+.cal-bar{padding:4px 11px; border-radius:var(--radius-pill); background:var(--stone-100); color:var(--muted); font-size:12px}
+.cal-note{font-size:12.5px; color:var(--muted); line-height:1.8; margin:10px 0 0}
+/* 入河手册 */
+.guide-disclaimer{border:1px solid var(--line); border-left:3px solid var(--amber); border-radius:0 var(--card-radius) var(--card-radius) 0; background:var(--card-bg); padding:12px 16px; margin:14px 0 4px; font-size:13px; color:var(--muted); line-height:1.8}
+.guide-block{margin:26px 0 8px}
+.guide-block h3{font-size:17px; margin:0 0 2px}
+.guide-block > p{color:var(--muted); font-size:13px; margin:0 0 12px; line-height:1.7}
+.guide-term{border:1px solid var(--line); border-radius:var(--card-radius); background:var(--card-bg); padding:14px 16px; margin-bottom:10px}
+.guide-term b{display:block; font-size:15px; margin-bottom:3px}
+.guide-term p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.75}
+.guide-src{display:inline-block; margin-top:7px; font-size:11.5px; color:var(--stone-400)}
+.guide-block.redline h3{color:var(--red-600)}
+.guide-warn{border:1px solid var(--line); border-left:4px solid var(--red-600); background:var(--red-chip); border-radius:0 var(--card-radius) var(--card-radius) 0; padding:13px 16px 13px 18px; margin-bottom:10px}
+.guide-warn b{display:block; font-size:14.5px; margin-bottom:2px; color:var(--red-600)}
+.guide-warn b::before{content:"红线 · "; font-weight:800}
+.guide-warn p{margin:0; font-size:13px; line-height:1.75}
+.guide-sources{margin:8px 0 0; padding-left:20px; color:var(--muted); font-size:12.5px; line-height:1.9}
 .search-bar{display:flex; gap:10px; margin:10px 0 6px; align-items:center}
 .search-input{flex:1; min-width:0; padding:13px 16px; font-size:15px; font-family:inherit;
   border:1px solid var(--line); border-radius:12px; background:var(--card-bg); color:var(--ink);
@@ -709,6 +749,11 @@ html[data-layout="mobile"] footer{width:100%; max-width:1120px; margin:0 auto; p
 .signal-nav a::before{content:""; width:5px; height:5px; margin-right:8px; border:1px solid var(--coral); transform:rotate(45deg)}
 .signal-nav a:hover,.signal-nav a.on{color:#fff}
 .signal-nav a.on::after{content:""; position:absolute; left:17px; right:17px; bottom:0; height:3px; background:var(--coral)}
+/* 导航分两组：常读 5 项 + 档案与工具 11 项（现役指数按产品原则不进导航）。
+   display:contents 让分组容器不参与布局，子项直接成为 .nav-inner 的 flex 项，
+   桌面纵向侧栏与移动端横向换行条因此都不需要各写一套方向。 */
+.nav-group{display:contents}
+.nav-group-label{flex:0 0 auto; align-self:center; margin:0 6px; padding:0 4px; color:rgba(255,255,255,.45); font-size:10.5px; font-weight:800; letter-spacing:.14em; white-space:nowrap}
 .skip-link{position:fixed; left:16px; top:12px; z-index:100; transform:translateY(-160%); padding:10px 14px; background:#fff; color:var(--rose-900); border:2px solid var(--coral); font-weight:800; text-decoration:none; box-shadow:0 8px 24px rgba(0,0,0,.18)}
 .skip-link:focus{transform:translateY(0)}
 .editorial-main section:empty{display:none}
@@ -988,20 +1033,20 @@ html[data-skin="dark"] .intake-step span,html[data-skin="dark"] .acc-code,html[d
   <aside class="sidebar">
     <a class="side-brand" href="index.html" data-page="home"><b>48HOT</b><span>成员发现与证据社区</span></a>
     <nav class="tabs signal-nav" id="tabs" aria-label="48HOT 频道导航"><div class="nav-inner">
-      <a href="index.html" data-page="home">48日报</a><a href="discover.html" data-page="discover">发现</a><a href="clips.html" data-page="clips">切片</a><a href="members.html" data-page="members">成员</a><a href="stories.html" data-page="stories">事件</a><a href="career.html" data-page="career">生涯</a><a href="contribute.html" data-page="contribute">共建</a><a href="gua.html" data-page="gua">舆论场</a><a href="search.html" data-page="search">搜索</a><a href="about.html" data-page="about">关于</a>
+      <div class="nav-group"><a href="index.html" data-page="home">48日报</a><a href="discover.html" data-page="discover">发现</a><a href="clips.html" data-page="clips">切片</a><a href="members.html" data-page="members">成员</a><a href="calendar.html" data-page="calendar">应援日历</a></div><div class="nav-group"><span class="nav-group-label">档案与工具</span><a href="feed.html" data-page="feed">今日动态</a><a href="hot.html" data-page="hot">热点</a><a href="stories.html" data-page="stories">事件</a><a href="career.html" data-page="career">生涯档案</a><a href="picks.html" data-page="picks">河内导航</a><a href="curated.html" data-page="curated">历史档案</a><a href="guide.html" data-page="guide">入河手册</a><a href="gua.html" data-page="gua">舆论场</a><a href="search.html" data-page="search">搜索</a><a href="contribute.html" data-page="contribute">共建</a><a href="about.html" data-page="about">关于</a></div>
     </div></nav>
     <div class="side-foot" id="sideFoot"></div>
   </aside>
   <main>
     <!-- THESIS: 48HOT 以可引用证据公平发现成员，拒绝把论坛热度或排行榜当作首页。 OWN-WORLD: 玫瑰色信号台召集行动，纸面档案区用规则线、状态文字和克制密度建立可信度。 STORY: 访客先发现一位成员及其作品证据，再分享切片、提交补档或公开纠错。 FIRST VIEWPORT: “让每一次努力都有出处”与真实每日发现档案同屏，主要行动是发现成员。 FORM: 开放档案接收台；批准构图为成员发现主导，并吸收证据侧栏与共建流程；surface seed bf30d2be。 -->
-    <section id="brief"></section><section id="discover"></section><section id="clips"></section><section id="contribute"></section><section id="feed"></section><section id="hot"></section><section id="stories"></section><section id="gua"></section><section id="rank"></section><section id="career"></section><section id="members"></section><section id="search"></section><section id="picks"></section><section id="curated"></section><section id="about"></section>
+    <section id="brief"></section><section id="discover"></section><section id="clips"></section><section id="contribute"></section><section id="feed"></section><section id="hot"></section><section id="stories"></section><section id="gua"></section><section id="rank"></section><section id="career"></section><section id="members"></section><section id="search"></section><section id="picks"></section><section id="curated"></section><section id="calendar"></section><section id="guide"></section><section id="about"></section>
   </main>
   <footer id="footer"></footer>
 </div>
 
 <script>
 const PAGE_ID = "about";
-const DATA = {"as_of": "2026-09-18", "as_of_cutoff": "2026-09-18", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 10, "member_events": 20, "feed_7d": 45, "feed_30d": 120}, "site_status": {"latest_collection": "2026-09-18T15:00:27+08:00", "latest_daily": "2026-09-18T09:03:06+08:00", "latest_daily_date": "2026-09-18", "route_checked_at": "2026-09-17T22:57:40+08:00", "route_ok": 15, "route_total": 18, "degraded": true, "degradation": "降级 · 3 条来源路由不可用，页面使用可用来源与本地快照"}};
+const DATA = {"as_of": "2026-09-20", "as_of_cutoff": "2026-09-20", "counts": {"total_items": 5559, "curated": 320, "hot_topics": 10, "events": 10, "guas": 9, "member_events": 20, "feed_7d": 50, "feed_30d": 112}, "site_status": {"latest_collection": "2026-09-20T09:00:21+08:00", "latest_daily": "2026-09-20T09:03:06+08:00", "latest_daily_date": "2026-09-20", "route_checked_at": "2026-09-20T00:08:15+08:00", "route_ok": 14, "route_total": 18, "degraded": true, "degradation": "降级 · 4 条来源路由不可用，页面使用可用来源与本地快照"}};
 const ARCHIVE = DATA.community_archive || {};
 
 /* 皮肤：浅色 / 薄荷 / 深色，三态循环，localStorage 持久化 */
@@ -1126,7 +1171,7 @@ if(sideFoot) sideFoot.innerHTML =
 const PAGE_PATHS = {
   home:'index.html', brief:'index.html', discover:'discover.html', clips:'clips.html', contribute:'contribute.html', feed:'feed.html', hot:'hot.html', stories:'stories.html',
   gua:'gua.html', rank:'rank.html', career:'career.html', members:'members.html', search:'search.html',
-  picks:'picks.html', curated:'curated.html', about:'about.html'
+  picks:'picks.html', curated:'curated.html', calendar:'calendar.html', guide:'guide.html', about:'about.html'
 };
 /* 社区证据使用一页一记录的稳定 URL；非社区栏目仍保留原有锚点分享。 */
 const slicePage = id => String(id || '').startsWith('slice-') ? 'slices/' + String(id) + '.html' : '';
@@ -1594,26 +1639,34 @@ function renderBrief(selectedDate = ''){
     h += `</ol></section>`;
   }
   h += `<section class="rp-tl"><div class="rp-sec">今日时间线<em>TIMELINE</em></div>`;
+  let tlTotal = 0;
   if(!timeline.length){
     h += `<div class="empty">本窗口暂无新讯</div>`;
   }else{
-    const timelineLimit = 14;
-    const timelineTotal = timeline.reduce((sum, group) => sum + group.items.length, 0);
-    let timelineShown = 0;
+    /* 先按基准条数渲染，多渲染出一批「隐藏余量」（.rp-extra）。
+       左右栏该多少条取决于当天数据：热点有时 10 条、成员动态有时为 0，
+       固定条数必然一栏空一截。余量留给渲染后的实测补齐/回收。 */
+    const timelineBase = 14;
+    const timelineMax = 30;
+    tlTotal = timeline.reduce((sum, group) => sum + group.items.length, 0);
+    let rendered = 0;
     timeline.forEach(g => {
-      const visibleItems = g.items.slice(0, Math.max(0, timelineLimit - timelineShown));
+      const room = Math.max(0, timelineMax - rendered);
+      if(!room) return;
+      const visibleItems = g.items.slice(0, room);
       if(!visibleItems.length) return;
       h += `<div class="rp-day"><div class="rp-day-head"><span class="rp-day-date">${esc(g.date)}</span><span class="rp-day-n">${g.items.length} 条</span></div>`;
       visibleItems.forEach(x => {
-        h += `<div class="rp-item"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
+        const extra = rendered >= timelineBase ? ' rp-extra' : '';
+        rendered += 1;
+        h += `<div class="rp-item${extra}"><span class="rp-time">${esc(tz(x.published_at_tz) || '—')}</span>`+
           `<span class="ch ${esc(x.channel)}">${esc(CH_NAME[x.channel] || x.channel)}</span>`+
           `<span class="rp-t"><a href="${esc(x.url)}" target="_blank" rel="noopener" title="${esc(x.title)}">${esc(compactTitle(x.title, 44))}</a></span>`+
           `<span class="rp-m">${esc(x.summary || '')}</span></div>`;
       });
-      timelineShown += visibleItems.length;
       h += `</div>`;
     });
-    if(timelineTotal > timelineLimit) h += `<p class="rp-foot">已展示 ${timelineLimit} 条正式来源动态；其余 ${timelineTotal - timelineLimit} 条可在「现场」频道继续阅读。</p>`;
+    h += `<p class="rp-foot" data-tl-foot>已展示 ${Math.min(tlTotal, timelineBase)} 条正式来源动态；其余 ${Math.max(0, tlTotal - timelineBase)} 条可在「现场」频道继续阅读。</p>`;
   }
   h += `</section></div><div class="rp-aside">`;
   if((b.hot_topics || []).length){
@@ -1643,11 +1696,57 @@ function renderBrief(selectedDate = ''){
     });
     h += `</section>`;
   }
+  /* 右栏常常偏矮（热点可能只有 5 条、成员动态可能为 0），补一块「最新切片」：
+     既填高度，又把日报引向可分享的稳定锚点，而不是让分隔竖线半途而废。 */
+  const asideSlices = (ARCHIVE.slices || []).slice(0, 6);
+  if(asideSlices.length){
+    h += `<section><div class="rp-sec">最新切片<em>ARCHIVE</em></div>`;
+    asideSlices.forEach(s => {
+      h += `<div class="rp-move"><span class="rp-move-k">${esc(s.date || '—')}</span>`+
+        `<span class="rp-move-t"><a href="${slicePage(s.id)}">${esc(compactTitle(s.title, 40))}</a>`+
+        `<span class="rp-move-d">${esc((s.members || []).slice(0, 2).join('、') || '未标注成员')}</span></span></div>`;
+    });
+    h += `</section>`;
+  }
   h += `</div></div>`;
   h += `<div class="brief-cta"><button class="jump-link cta-btn" data-section="feed">查看全部动态 →</button><button class="jump-link cta-btn" data-section="hot">完整热点榜 →</button></div>`;
   h += `<p class="rp-foot">48日报 · 每日 09:00 由「采集 → 策展 → 热点 → 事件 → 简报」流水线生成一期，非实时刷新；可用上方日期切换往期正文。${esc(b.honest_line || '') ? ' · ' + esc(b.honest_line) : ''}</p>`;
   h += `</div>`;
   el.innerHTML = h;
+  /* 左右栏同高靠实测，不靠猜条数：当天热点可能 10 条也可能 5 条、成员动态可能为 0，
+     固定条数必然让一栏空一截。渲染后测两栏高度差：右栏高就放出时间线余量，
+     左栏高就回收（保底 8 条），最后同步「已展示 N 条」的说明，避免说明与实际不符。 */
+  (() => {
+    const main = el.querySelector('.rp-main');
+    const aside = el.querySelector('.rp-aside');
+    if(!main || !aside) return;
+    const visible = () => Array.from(el.querySelectorAll('.rp-item:not(.rp-extra)'));
+    const gap = () => {
+      const a = aside.getBoundingClientRect().height, b = main.getBoundingClientRect().height;
+      return (typeof a === 'number' && typeof b === 'number' && isFinite(a) && isFinite(b)) ? (a - b) : 0;
+    };
+    let guard = 0;
+    while(gap() > 140 && guard++ < 14){
+      const next = el.querySelector('.rp-item.rp-extra');
+      if(!next) break;
+      next.classList.remove('rp-extra');
+    }
+    guard = 0;
+    while(gap() < -140 && visible().length > 8 && guard++ < 14){
+      const list = visible();
+      list[list.length - 1].classList.add('rp-extra');
+    }
+    el.querySelectorAll('.rp-day').forEach(d => {
+      if(!d.querySelector('.rp-item:not(.rp-extra)')) d.classList.add('rp-extra');
+    });
+    const foot = el.querySelector('[data-tl-foot]');
+    if(foot){
+      const shown = visible().length;
+      foot.textContent = shown >= tlTotal
+        ? `时间线已展示全部 ${shown} 条正式来源动态。`
+        : `已展示 ${shown} 条正式来源动态；其余 ${tlTotal - shown} 条可在「现场」频道继续阅读。`;
+    }
+  })();
   bindJumps(el);
   bindShare(el);
   el.querySelectorAll('.rp-chip').forEach(c => c.addEventListener('click', () => {
@@ -2267,7 +2366,7 @@ function renderAbout(){
     <p><b>共建方式</b>：静态原型先导出投稿 JSON，由编辑核验后再公开。没有帐号系统、自动审核或虚构的社区人数。</p>
     <p><b>数据源</b>：SNH48 GROUP 官网、官方微博/B站账号、公开媒体、历史档案，以及获得公开许可的口袋48聚合记录。</p>
     <p><b>版权</b>：官网内容版权归上海丝芭文化传媒集团有限公司所有；授权范围内使用须注明「来源：SNH48.com」。</p>
-    <p><b>内容入口</b>：<a href="discover.html">公平成员发现</a> · <a href="clips.html">可分享切片</a> · <a href="members.html">成员档案</a> · <a href="contribute.html">提交证据与纠错</a> · <a href="gua.html">真伪分级舆论场</a>。</p>
+    <p><b>内容入口</b>：<a href="discover.html">公平成员发现</a> · <a href="clips.html">可分享切片</a> · <a href="members.html">成员档案</a> · <a href="calendar.html">应援日历（生日档案）</a> · <a href="guide.html">入河手册（术语与机制）</a> · <a href="contribute.html">提交证据与纠错</a> · <a href="gua.html">真伪分级舆论场</a>。</p>
     <details class="editorial-fold"><summary>数据工具与次级栏目</summary><p><a href="feed.html">全量现场</a> · <a href="hot.html">热度信号</a> · <a href="rank.html">现役数据指数</a> · <a href="curated.html">官网历史档案</a> · <a href="picks.html">河内导航</a>。这些工具服务于证据整理，不定义成员价值。</p></details>
   </div>`;
 }
@@ -2292,6 +2391,169 @@ function renderPicks(){
   el.innerHTML = h;
 }
 
+/* ---- 应援日历（生日档案） ---- */
+/* 官方只公布月日，因此只按月日排布、不做年龄推断；
+   「今天/未来 30 天」在浏览器按访问者本地日期算，避免构建日期一过就过期。 */
+function renderCalendar(){
+  const el = document.getElementById('calendar');
+  const C = DATA.calendar || {};
+  const counts = C.counts || {};
+  const STATUS = {active:'现役', honor:'荣誉', retired:'已退团'};
+  const SCLS = {active:'act', honor:'v-low', retired:''};
+  const all = [];
+  (C.months || []).forEach(mo => (mo.members || []).forEach(m => all.push(m)));
+  const start = new Date(); start.setHours(0,0,0,0);
+  const daysTo = b => {
+    const parts = String(b || '').split('.');
+    const M = parseInt(parts[0], 10), D = parseInt(parts[1], 10);
+    if(!M || !D) return 999;
+    const t = new Date(start.getFullYear(), M - 1, D);
+    if(t < start) t.setFullYear(t.getFullYear() + 1);
+    return Math.round((t - start) / 86400000);
+  };
+  const when = d => d === 0 ? '今天' : (d === 1 ? '明天' : d + ' 天后');
+  const who = m => [m.g, m.t, m.b, m.z].filter(Boolean).join(' · ');
+  const card = m => `<div class="pick-card"><span class="pick-title">${esc(m.n)} ` +
+    `<span class="tag ${SCLS[m.s] || ''}">${esc(STATUS[m.s] || '—')}</span></span>` +
+    `<span class="pick-why">${esc(who(m))}</span></div>`;
+
+  let h = `<h2>应援日历</h2>`;
+  h += `<p class="hint">${esc(C.date_format || 'MM.DD')} · 快照 ${esc(C.snapshot || '—')} · 来源 ${esc(C.source || '官方成员列表')}。字段与<a href="members.html">成员档案</a>同源，不新增任何推断值。</p>`;
+  h += `<div class="cal-stats">`;
+  [['在册总人数', counts.total], ['有生日记录', counts.dated], ['现役', counts.active],
+   ['荣誉毕业', counts.honor], ['已退团', counts.retired], ['官方未公布', counts.undated]]
+    .forEach(p => { h += `<div class="cal-stat"><b>${esc(String(p[1] ?? '—'))}</b><span>${esc(p[0])}</span></div>`; });
+  h += `</div>`;
+
+  /* 筛选条放在预告之上：一个筛选同时作用于「今天/未来 30 天」与「全年档案」。
+     放在档案上方会导致上方的预告不跟着变，读起来像两套互不相干的数。 */
+  h += `<h3 class="pick-name">按状态与分团筛选（同时作用于下方预告与档案）</h3>`;
+  h += `<div class="cats" id="calStatus">` +
+    [['all', '全部', counts.dated], ['active', '现役', counts.active], ['honor', '荣誉', counts.honor], ['retired', '已退团', counts.retired]]
+      .map(s => `<button class="cat-chip${s[0] === 'all' ? ' on' : ''}" data-cal-status="${s[0]}">${s[1]} ${s[2]}</button>`).join('') + `</div>`;
+  h += `<div class="cats" id="calGroup">` + [['all', '所有分团']].concat((C.groups || []).map(g => [g.label, g.label]))
+    .map(g => `<button class="cat-chip${g[0] === 'all' ? ' on' : ''}" data-cal-group="${esc(g[0])}">${esc(g[1])}</button>`).join('') + `</div>`;
+
+  h += `<div id="calNear"></div>`;
+
+  if((C.signs || []).length){
+    h += `<h3 class="pick-name">星座分布</h3><div class="cal-bars">` +
+      C.signs.map(s => `<span class="cal-bar">${esc(s.label)} ${s.count}</span>`).join('') + `</div>`;
+  }
+  if((C.groups || []).length){
+    h += `<h3 class="pick-name">分团构成</h3><div class="cal-bars">` +
+      C.groups.map(g => `<span class="cal-bar">${esc(g.label)} ${g.count}</span>`).join('') + `</div>`;
+  }
+
+  h += `<h3 class="pick-name">全年生日档案</h3><div id="calArchive"></div>`;
+  if((C.undated_sample || []).length){
+    h += `<p class="cal-note">官方列表未公布生日的 ${counts.undated} 位未列入（例如 ${C.undated_sample.map(esc).join('、')}）；这里不用推测值补位。</p>`;
+  }
+  h += `<p class="cal-note">默认含已退团成员：官方 App 只展示在团成员，这是本站档案口径与官方唯一的差别，只想看现役就点上方的「现役」。生日应援请遵守剧场与公演规定，不打扰成员私人生活；本页不排名、不评价成员价值。</p>`;
+  el.innerHTML = h;
+
+  let curStatus = 'all', curGroup = 'all';
+  const near = el.querySelector('#calNear');
+  const host = el.querySelector('#calArchive');
+  const pass = m => (curStatus === 'all' || m.s === curStatus) && (curGroup === 'all' || m.g === curGroup);
+
+  const drawNear = () => {
+    const pool = all.filter(pass);
+    const today = pool.filter(m => daysTo(m.b) === 0).sort((a, b) => String(a.b).localeCompare(String(b.b)));
+    const upcoming = pool.map(m => ({m: m, d: daysTo(m.b)}))
+      .filter(x => x.d > 0 && x.d <= 30)
+      .sort((a, b) => a.d - b.d || String(a.m.b).localeCompare(String(b.m.b)));
+    let s = '';
+    if(today.length){
+      s += `<div class="cal-today"><strong>今天生日 · ${today.length} 位</strong><p>${today.map(m => esc(m.n + '（' + who(m) + '）')).join('、')}</p></div>`;
+    } else {
+      s += `<div class="cal-today"><strong>今天没有符合条件的成员生日</strong><p>下方是接下来 30 天的名单。</p></div>`;
+    }
+    /* 按日期归并：30 天内约有 60 位成员，平铺成 60 个 chip 读不出节奏，
+       聚成约 25 个「日期行」才像一条时间轴。upcoming 已按天数升序，插入顺序即日期顺序。 */
+    const seen = new Map();
+    const byDate = [];
+    upcoming.forEach(x => {
+      if(!seen.has(x.m.b)){ seen.set(x.m.b, {d: x.d, names: []}); byDate.push([x.m.b, seen.get(x.m.b)]); }
+      seen.get(x.m.b).names.push(x.m.n);
+    });
+    if(byDate.length){
+      s += `<h3 class="pick-name">接下来 30 天 · ${upcoming.length} 位 / ${byDate.length} 个日期</h3><div class="cal-days">` +
+        byDate.map(([b, v]) => `<div class="cal-day"><b>${esc(b)}</b><span class="cal-when">${esc(when(v.d))}</span>` +
+          `<span class="cal-names">${v.names.map(esc).join('、')}</span></div>`).join('') + `</div>`;
+    } else {
+      s += `<p class="cal-note">当前筛选下，接下来 30 天没有生日记录。</p>`;
+    }
+    near.innerHTML = s;
+  };
+
+  const curMonthNo = start.getMonth() + 1;
+  const drawArchive = () => {
+    const months = (C.months || []).map(mo => {
+      const list = (mo.members || []).filter(pass);
+      return {m: mo.m, label: mo.label, list: list};
+    }).filter(mo => mo.list.length);
+    if(!months.length){ host.innerHTML = `<div class="empty">当前筛选下没有记录</div>`; return; }
+    const total = months.reduce((n, mo) => n + mo.list.length, 0);
+    /* 按月折叠：全部 715 条一次展开会渲染 715 张卡，移动端首屏压力极大；
+       默认只展开当前月，其余按月折叠并显示人数。 */
+    host.innerHTML = `<p class="cal-note">当前筛选共 ${total} 位，按月份折叠，点月份展开（默认展开当前月）。</p>` +
+      months.map(mo => `<details class="cal-month"${mo.m === curMonthNo ? ' open' : ''}>` +
+        `<summary><span class="cal-month-label">${esc(mo.label)}</span><span class="cal-month-count">${mo.list.length} 位</span></summary>` +
+        `<div class="pick-grid">${mo.list.map(card).join('')}</div></details>`).join('');
+  };
+
+  const redraw = () => { drawNear(); drawArchive(); };
+  redraw();
+  el.addEventListener('click', event => {
+    const s = event.target.getAttribute && event.target.getAttribute('data-cal-status');
+    const g = event.target.getAttribute && event.target.getAttribute('data-cal-group');
+    if(!s && !g) return;
+    if(s) curStatus = s;
+    if(g) curGroup = g;
+    el.querySelectorAll('[data-cal-status]').forEach(b => b.classList.toggle('on', b.getAttribute('data-cal-status') === curStatus));
+    el.querySelectorAll('[data-cal-group]').forEach(b => b.classList.toggle('on', b.getAttribute('data-cal-group') === curGroup));
+    redraw();
+  });
+}
+
+/* ---- 入河手册（术语 / 机制 / 风险边界） ---- */
+function renderGuide(){
+  const el = document.getElementById('guide');
+  const G = DATA.guide || {};
+  let h = `<h2>入河手册</h2>`;
+  if(G.disclaimer) h += `<div class="guide-disclaimer">${esc(G.disclaimer)}</div>`;
+  const srcMap = {};
+  (G.sources || []).forEach(s => { if(s.key) srcMap[s.key] = s; });
+  (G.sections || []).forEach(sec => {
+    h += `<div class="guide-block${sec.tone === 'warn' ? ' redline' : ''}"><h3>${esc(sec.title || '')}</h3>`;
+    if(sec.desc) h += `<p>${esc(sec.desc)}</p>`;
+    (sec.items || []).forEach(it => {
+      const body = `<p>${esc(it.text || '')}</p>`;
+      /* 出处能落到 sources[] 里带 URL 的条目时渲染成可点的「原文」，
+         查不到的（如未收录 URL 的转载稿）就只留文字，不编造链接。 */
+      const ref = it.src ? srcMap[it.src] : null;
+      const meta = [it.source, it.year].filter(Boolean).join(' · ');
+      const src = meta
+        ? `<span class="guide-src">来源：${esc(meta)}` +
+          (ref && ref.url ? ` · <a href="${esc(ref.url)}" target="_blank" rel="noopener">原文</a>` : '') +
+          `</span>`
+        : '';
+      h += sec.tone === 'warn'
+        ? `<div class="guide-warn"><b>${esc(it.term || '')}</b>${body}${src}</div>`
+        : `<div class="guide-term"><b>${esc(it.term || '')}</b>${body}${src}</div>`;
+    });
+    h += `</div>`;
+  });
+  if((G.sources || []).length){
+    h += `<div class="guide-block"><h3>出处清单</h3><ul class="guide-sources">` +
+      G.sources.map(s => `<li>${esc([s.name, s.year, s.about].filter(Boolean).join(' · '))}` +
+        (s.url ? ` · <a href="${esc(s.url)}" target="_blank" rel="noopener">原文</a>` : '') + `</li>`).join('') + `</ul></div>`;
+  }
+  h += `<p class="cal-note">本页只做机制说明与风险提示，不代管交易、不组织集资、不为任何第三方背书。</p>`;
+  el.innerHTML = h;
+}
+
 const sectionRenderers = {
   brief: renderBrief,
   discover: renderDiscover,
@@ -2307,6 +2569,8 @@ const sectionRenderers = {
   search: renderSearch,
   picks: renderPicks,
   curated: renderCurated,
+  calendar: renderCalendar,
+  guide: renderGuide,
   about: renderAbout,
 };
 const renderedSections = new Set();
@@ -2334,7 +2598,19 @@ document.getElementById('footer').innerHTML =
   `<span>日报 ${esc(DATA.site_status?.latest_daily || '未知')}</span>`+
   `<span>路由 ${esc(DATA.site_status?.route_checked_at || '未知')} · ${esc(String(DATA.site_status?.route_ok || 0))}/${esc(String(DATA.site_status?.route_total || 0))}</span>`+
   `<span class="${DATA.site_status?.degraded ? 'degraded' : ''}">${esc(DATA.site_status?.degradation || '状态未知')}</span></div>`+
-  `48HOT · 个人非商业原型 · 数据来源 <a href="https://www.snh48.com" target="_blank" rel="noopener">SNH48.com</a> · 内容版权归上海丝芭文化传媒集团有限公司所有`;
+  `48HOT · 个人非商业原型 · 数据来源 <a href="https://www.snh48.com" target="_blank" rel="noopener">SNH48.com</a> · 内容版权归上海丝芭文化传媒集团有限公司所有`+
+  `<div class="bsz-row">`+
+  `<span id="busuanzi_container_site_pv" class="bsz" style="display:none">总访问 <b id="busuanzi_value_site_pv"></b></span>`+
+  `<span id="busuanzi_container_site_uv" class="bsz" style="display:none">访客 <b id="busuanzi_value_site_uv"></b></span>`+
+  `<span id="busuanzi_container_page_pv" class="bsz" style="display:none">本页 <b id="busuanzi_value_page_pv"></b></span>`+
+  `</div>`;
+(function(){
+  var bsz = document.createElement('script');
+  bsz.async = true;
+  bsz.referrerPolicy = 'no-referrer-when-downgrade';
+  bsz.src = 'https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+  document.body.appendChild(bsz);
+})();
 </script>
 </body>
 </html>
